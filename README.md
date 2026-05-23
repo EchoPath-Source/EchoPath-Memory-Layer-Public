@@ -12,6 +12,16 @@ Contact: contact@echopathxr.com
 
 ---
 
+## Quick Start
+
+1. **See it live** -> [Try the GitHub demo](https://echopath-source.github.io/EchoPath-Memory-Layer-Public/)
+2. **Understand it** -> [Read the API docs](docs/API.md)
+3. **Learn to build it** -> [Explore example code](examples/)
+4. **Use it** -> [Buy the preset pack](https://echopathxr.com/product/preset-pack-starter-edition/)
+5. **Ship it** -> [Get plugin + support](https://echopathxr.com/echopath-memory-layer/)
+
+---
+
 ## What Is This?
 
 EchoPath Memory Layer helps developers create environments that remember repeated behavior and respond over time.
@@ -57,19 +67,6 @@ This repo does **not** include:
 
 ---
 
-## Quick Start
-
-1. Try the website demo: https://echopathxr.com/echopath-memory-layer/
-2. Read the quick start: [`docs/QUICK_START.md`](docs/QUICK_START.md)
-3. Review the API contract: [`docs/API.md`](docs/API.md)
-4. Explore engine examples:
-   - [`examples/unity-bridge.cs`](examples/unity-bridge.cs)
-   - [`examples/godot-bridge.gd`](examples/godot-bridge.gd)
-   - [`examples/web-adapter.js`](examples/web-adapter.js)
-5. Review the integration guide: [`docs/INTEGRATION_GUIDE.md`](docs/INTEGRATION_GUIDE.md)
-
----
-
 ## Developer Funnel
 
 ```text
@@ -88,6 +85,9 @@ The public examples are designed for learning and prototyping. Production plugin
 
 ```text
 docs/
+  index.html
+  styles.css
+  game.js
   API.md
   QUICK_START.md
   INTEGRATION_GUIDE.md
@@ -95,6 +95,7 @@ docs/
   PUBLIC_PRIVATE_BOUNDARY.md
 
 examples/
+  README.md
   unity-bridge.cs
   godot-bridge.gd
   web-adapter.js
