@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EchoPath Memory Layer — The Room Remembers</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">EchoPath Memory Layer</p>
+      <h1>The Room Remembers</h1>
+      <p class="lede">A browser demo showing spatial memory, decay, reinforcement, and threshold-triggered behavior.</p>
+      <div class="cta-row">
+        <a class="button primary" href="https://echopathxr.com/echopath-memory-layer/">Get plugin + support</a>
+        <a class="button" href="https://echopathxr.com/product/preset-pack-starter-edition/">Buy preset pack</a>
+        <a class="button" href="../">Back to hub</a>
+      </div>
+    </section>
+
+    <section class="panel try-panel">
+      <p class="eyebrow">What to try</p>
+      <ol>
+        <li>Tap <strong>Player hides in Closet</strong> four or five times.</li>
+        <li>Watch <strong>closet.hiding</strong> accumulate and decay.</li>
+        <li>When the threshold is crossed, the NPC investigates.</li>
+      </ol>
+      <p class="hint">This is a simplified public sandbox. Production/plugin builds support larger maps, custom anchors, tuned presets, engine adapters, and studio integration.</p>
+    </section>
+
+    <section class="demo-grid">
+      <div class="panel world-panel">
+        <div class="world" id="world">
+          <button class="zone" id="closet" style="left: 10%; top: 18%;">Closet</button>
+          <button class="zone" id="hallway" style="left: 43%; top: 42%;">Hallway</button>
+          <button class="zone" id="exit" style="left: 74%; top: 65%;">Exit</button>
+          <div class="npc" id="npc">NPC</div>
+        </div>
+        <p class="hint">Click a zone to write memory. Repeated hiding in the closet will trigger investigation.</p>
+      </div>
+
+      <div class="panel controls-panel">
+        <h2>Write Memory</h2>
+        <div class="button-stack">
+          <button data-event="hiding" data-anchor="closet" data-strength="0.18">Player hides in Closet</button>
+          <button data-event="sound" data-anchor="hallway" data-strength="0.20">Sound in Hallway</button>
+          <button data-event="safe" data-anchor="exit" data-strength="0.14">Safe route to Exit</button>
+          <button data-event="danger" data-anchor="hallway" data-strength="0.24">Danger in Hallway</button>
+        </div>
+        <h2>Memory Values</h2>
+        <div id="meters" class="meters"></div>
+      </div>
+    </section>
+
+    <section class="panel log-panel">
+      <h2>Console Output</h2>
+      <pre id="log">[EchoPath Memory] Demo ready.\n</pre>
+    </section>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
