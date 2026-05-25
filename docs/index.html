@@ -3,51 +3,63 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EchoPath Memory Layer — The Room Remembers</title>
+  <title>EchoPath Memory Layer — Public Demo Hub</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .hub-grid { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:18px; margin-top:18px; }
+    .hub-card { min-height: 310px; display:flex; flex-direction:column; justify-content:space-between; }
+    .status { display:inline-flex; width:max-content; border:1px solid var(--border); border-radius:999px; padding:7px 10px; color:var(--cyan); font-size:.78rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+    .hub-card h2 { font-size:1.55rem; line-height:1.05; margin:18px 0 8px; }
+    .hub-card p { color:var(--muted); line-height:1.58; }
+    .mini-note { margin-top:18px; color:var(--muted); font-size:.95rem; line-height:1.55; }
+    @media (max-width: 900px) { .hub-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
   <main class="shell">
     <section class="hero">
       <p class="eyebrow">EchoPath Memory Layer</p>
-      <h1>The Room Remembers</h1>
-      <p class="lede">A browser demo showing spatial memory, decay, reinforcement, and threshold-triggered behavior.</p>
+      <h1>Public Demo Hub</h1>
+      <p class="lede">Developer-facing mirrors for the EchoPath Memory Layer demos. The main branded product flow remains on echopathxr.com; these GitHub Pages demos provide stable public previews and integration trust.</p>
       <div class="cta-row">
-        <a class="button primary" href="https://echopathxr.com/echopath-memory-layer/">Get plugin + support</a>
-        <a class="button" href="https://echopathxr.com/product/preset-pack-starter-edition/">Buy preset pack</a>
+        <a class="button primary" href="https://echopathxr.com/echopath-memory-layer/">Memory Layer page</a>
+        <a class="button" href="https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public">View public repo</a>
       </div>
     </section>
 
-    <section class="demo-grid">
-      <div class="panel world-panel">
-        <div class="world" id="world">
-          <button class="zone" id="closet" style="left: 10%; top: 18%;">Closet</button>
-          <button class="zone" id="hallway" style="left: 43%; top: 42%;">Hallway</button>
-          <button class="zone" id="exit" style="left: 74%; top: 65%;">Exit</button>
-          <div class="npc" id="npc">NPC</div>
+    <section class="hub-grid">
+      <article class="panel hub-card">
+        <div>
+          <span class="status">Live mirror</span>
+          <h2>The Room Remembers</h2>
+          <p>A simplified public sandbox proving the core loop: zone click → memory writes → value accumulates → threshold fires → NPC responds.</p>
         </div>
-        <p class="hint">Click a zone to write memory. Repeated hiding in the closet will trigger investigation.</p>
-      </div>
+        <a class="button primary" href="room-remembers/">Play demo</a>
+      </article>
 
-      <div class="panel controls-panel">
-        <h2>Write Memory</h2>
-        <div class="button-stack">
-          <button data-event="hiding" data-anchor="closet" data-strength="0.18">Player hides in Closet</button>
-          <button data-event="sound" data-anchor="hallway" data-strength="0.20">Sound in Hallway</button>
-          <button data-event="safe" data-anchor="exit" data-strength="0.14">Safe route to Exit</button>
-          <button data-event="danger" data-anchor="hallway" data-strength="0.24">Danger in Hallway</button>
+      <article class="panel hub-card">
+        <div>
+          <span class="status">Live mirror</span>
+          <h2>Memory Visualizer</h2>
+          <p>A public-safe heatmap-style visual layer showing what the world remembers across anchors, memory channels, decay, and threshold pressure.</p>
         </div>
-        <h2>Memory Values</h2>
-        <div id="meters" class="meters"></div>
-      </div>
+        <a class="button primary" href="memory-visualizer/">Launch visualizer</a>
+      </article>
+
+      <article class="panel hub-card">
+        <div>
+          <span class="status">Product funnel</span>
+          <h2>Preset Pack</h2>
+          <p>Starter behavior templates for haunted rooms, predator trails, safe paths, danger echoes, and adaptive spatial-memory prototypes.</p>
+        </div>
+        <a class="button" href="https://echopathxr.com/product/preset-pack-starter-edition/">View product</a>
+      </article>
     </section>
 
     <section class="panel log-panel">
-      <h2>Console Output</h2>
-      <pre id="log">[EchoPath Memory] Demo ready.\n</pre>
+      <h2>Public / Private Boundary</h2>
+      <p class="mini-note">These mirrors teach the pattern and provide developer confidence. The production runtime, paid plugin builds, private research prototypes, and future Q-RRG convergence layers remain distributed through EchoPath XR products, partner builds, and private repos.</p>
     </section>
   </main>
-
-  <script src="game.js"></script>
 </body>
 </html>
