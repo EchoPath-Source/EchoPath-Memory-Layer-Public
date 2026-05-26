@@ -1,10 +1,28 @@
-# EchoPath Memory Layer Public API Contract v0.1
+# EchoPath Memory Layer Public API Contract v0.2
 
 ## Purpose
 
 This document defines the public integration contract for EchoPath Memory Layer examples.
 
-The full production runtime may differ internally. The public API contract exists so developers can understand the intended integration pattern.
+The full production runtime may differ internally. The public API contract exists so developers can understand the intended integration pattern without exposing private runtime internals, CNN-SoCT research models, Q-RRG convergence layers, or paid plugin source.
+
+---
+
+## Core Loop
+
+```text
+Scene event -> memory anchor -> decay / reinforcement -> threshold response -> agent query -> game behavior
+```
+
+Example:
+
+```text
+Player hides in closet repeatedly
+  -> closet.hiding accumulates
+  -> threshold fires
+  -> NPC queries local memory
+  -> NPC investigates closet
+```
 
 ---
 
@@ -12,7 +30,7 @@ The full production runtime may differ internally. The public API contract exist
 
 ## Memory Anchor
 
-A spatial zone that can accumulate memory.
+A spatial zone, object, waypoint, route, or region that can accumulate memory.
 
 ```js
 {
@@ -22,21 +40,25 @@ A spatial zone that can accumulate memory.
   radius: 1,
   decayRate: 0.02,
   reinforcementMultiplier: 1.2,
-  memory: {}
+  memory: {},
+  tags: ["hide_spot"],
+  metadata: {}
 }
 ```
 
-## Memory Event
+## Engram Event
 
-An event written into an anchor.
+A memory-writing event. Public demos should prefer `writeEngram(...)`, which may target by anchor ID or by nearest position.
 
 ```js
 {
   type: "hiding",
   source: "player",
   targetAnchorId: "closet",
+  position: { x: 7, y: 2, z: 0 },
   strength: 0.18,
-  tags: ["player_behavior"]
+  tags: ["player_behavior"],
+  metadata: {}
 }
 ```
 
@@ -51,6 +73,7 @@ A rule that fires when a memory value crosses a threshold.
   memoryType: "hiding",
   threshold: 0.72,
   actionKey: "npc.investigate",
+  mode: "cooldown",
   cooldownSeconds: 14
 }
 ```
@@ -61,33 +84,54 @@ A rule that fires when a memory value crosses a threshold.
 
 ```js
 addAnchor(anchor)
+writeEngram({ anchorId, position, eventType, strength, source, tags, radius })
 writeEvent(event)
 step(deltaTime)
 getAnchor(id)
 getMemory(anchorId, memoryType)
-addRule(rule)
+getLocalMemoryGradient({ position, radius, type })
 onTrigger(callback)
-loadPreset(preset)
+saveState()
+loadState(state)
+serialize()
+deserialize(json)
 ```
 
 ---
 
 ## addAnchor(anchor)
 
-Adds a room, object, path, waypoint, or region that can accumulate memory.
+Adds a memory-bearing room, object, path, waypoint, or region.
+
+---
+
+## writeEngram(options)
+
+Developer-friendly event writer.
+
+```js
+memory.writeEngram({
+  position: player.position,
+  eventType: "hiding",
+  strength: 0.32,
+  source: "player",
+  tags: ["stealth", "repeat_behavior"],
+  radius: 2
+})
+```
+
+If `anchorId` is provided, the event writes directly to that anchor. If only `position` is provided, the system selects the nearest anchor within `radius`.
 
 ---
 
 ## writeEvent(event)
 
-Writes a memory event into the field.
-
-Examples:
+Lower-level explicit event writer. Useful for adapters and deterministic replays.
 
 ```js
-writeEvent({ type: "presence", targetAnchorId: "hallway", strength: 0.12 })
-writeEvent({ type: "hiding", targetAnchorId: "closet", strength: 0.18 })
-writeEvent({ type: "sound", targetAnchorId: "hallway", strength: 0.20 })
+memory.writeEvent({ type: "presence", targetAnchorId: "hallway", strength: 0.12 })
+memory.writeEvent({ type: "hiding", targetAnchorId: "closet", strength: 0.18 })
+memory.writeEvent({ type: "sound", targetAnchorId: "hallway", strength: 0.20 })
 ```
 
 ---
@@ -95,8 +139,6 @@ writeEvent({ type: "sound", targetAnchorId: "hallway", strength: 0.20 })
 ## step(deltaTime)
 
 Advances memory decay, propagation, and trigger checks.
-
-Typical usage:
 
 ```js
 function update(dt) {
@@ -116,31 +158,69 @@ const hiding = memory.getMemory("closet", "hiding")
 
 ---
 
+## getLocalMemoryGradient(query)
+
+Agent-facing query interface. NPCs can call this every few frames to convert spatial memory into behavior.
+
+```js
+const readout = memory.getLocalMemoryGradient({
+  position: npc.position,
+  radius: 5,
+  type: "hiding"
+})
+```
+
+Suggested response shape:
+
+```js
+{
+  totals: { hiding: 0.74, sound: 0.12 },
+  danger: 0.10,
+  familiarity: 0.41,
+  curiosity: 0.72,
+  strongestAnchorId: "closet",
+  strongestAnchorLabel: "Closet",
+  gradientTarget: { x: 7, y: 2, z: 0 },
+  suggestedAction: "investigate memory hotspot"
+}
+```
+
+---
+
 ## onTrigger(callback)
 
 Receives threshold responses.
 
 ```js
-memory.onTrigger((trigger) => {
-  if (trigger.actionKey === "npc.investigate") {
-    sendNpcTo(trigger.anchorId)
+memory.onTrigger((event) => {
+  if (event.trigger.actionKey === "npc.investigate") {
+    sendNpcTo(event.trigger.anchorId)
   }
 })
 ```
 
 ---
 
-## loadPreset(preset)
+## Save / Load Memory State
 
-Loads a preset configuration.
+Cross-session memory should use versioned state envelopes.
 
-Presets may define:
+```js
+const snapshot = {
+  schema: "echopath.memory_state",
+  version: "0.1",
+  savedAt: new Date().toISOString(),
+  field: memory.saveState()
+}
+```
 
-- anchors
-- memory curves
-- threshold rules
-- action keys
-- suggested behavior mapping
+Later:
+
+```js
+const restored = MemoryField.loadState(snapshot.field)
+```
+
+For public examples, save/load is local and developer-controlled. Production plugin builds may add cloud sync, project-specific schema migrations, replay logs, and engine-native persistence.
 
 ---
 
@@ -150,19 +230,23 @@ Public API:
 
 - stable method names
 - configuration schema
-- adapter pattern
+- memory anchor pattern
+- event writer pattern
+- agent query contract
 - trigger contract
+- save/load shape
 
 Private implementation:
 
-- optimized runtime internals
-- advanced propagation
-- plugin implementation
-- research models
-- Q-RRG / Cognition convergence
+- optimized production runtime internals
+- paid plugin source
+- CNN-SoCT research engine
+- V8/V9 experimental models
+- Q-RRG / Cognition convergence internals
+- partner-specific builds
 
 ---
 
 ## Status
 
-Draft API contract for public examples and early adopters.
+Draft API contract for public examples and early adopters. This API is intended as the public-facing Memory Lite surface, not the full private engine.
