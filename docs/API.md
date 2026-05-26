@@ -97,6 +97,8 @@ serialize()
 deserialize(json)
 ```
 
+Beginner rule: use `writeEngram(...)` first. Use `writeEvent(...)` only when you need explicit anchor targeting, adapter control, or deterministic replay.
+
 ---
 
 ## addAnchor(anchor)
@@ -145,6 +147,8 @@ function update(dt) {
   memory.step(dt)
 }
 ```
+
+Threshold timing note: writes can trigger threshold rules immediately at the current field time. Thresholds are also evaluated during `step(deltaTime)` after decay updates.
 
 ---
 
@@ -208,8 +212,10 @@ Cross-session memory should use versioned state envelopes.
 ```js
 const snapshot = {
   schema: "echopath.memory_state",
-  version: "0.1",
+  version: "0.1.0",
   savedAt: new Date().toISOString(),
+  engine: "memory-lite",
+  metadata: {},
   field: memory.saveState()
 }
 ```
@@ -221,6 +227,20 @@ const restored = MemoryField.loadState(snapshot.field)
 ```
 
 For public examples, save/load is local and developer-controlled. Production plugin builds may add cloud sync, project-specific schema migrations, replay logs, and engine-native persistence.
+
+---
+
+## API Stability
+
+The current public API contract is draft v0.2. During the v0.x examples phase:
+
+- documented method names should remain stable unless a change is noted;
+- beginner examples should prefer `writeEngram(...)`;
+- `writeEvent(...)` remains the lower-level adapter/replay path;
+- save/load examples should use the versioned snapshot envelope;
+- adapter behavior should follow `docs/ADAPTER_CONTRACT.md`.
+
+See also: `docs/VERSIONING.md`.
 
 ---
 
@@ -250,3 +270,11 @@ Private implementation:
 ## Status
 
 Draft API contract for public examples and early adopters. This API is intended as the public-facing Memory Lite surface, not the full private engine.
+
+Next reads:
+
+```text
+docs/RECIPES.md
+docs/ADAPTER_CONTRACT.md
+docs/VERSIONING.md
+```
