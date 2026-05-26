@@ -12,13 +12,48 @@ Contact: contact@echopathxr.com
 
 ---
 
-## Quick Start
+## Start Here
+
+For the fastest onboarding path, follow:
+
+```text
+README.md
+  -> docs/START_HERE.md
+  -> docs/QUICK_START.md
+  -> docs/API.md
+  -> examples/README.md
+  -> docs/ADAPTER_CONTRACT.md
+```
 
 1. **See it live** -> [Try the GitHub demo](https://echopath-source.github.io/EchoPath-Memory-Layer-Public/)
-2. **Understand it** -> [Read the API docs](docs/API.md)
-3. **Learn to build it** -> [Explore example code](examples/)
-4. **Use it** -> [Buy the preset pack](https://echopathxr.com/product/preset-pack-starter-edition/)
-5. **Ship it** -> [Get plugin + support](https://echopathxr.com/echopath-memory-layer/)
+2. **Start in 10 minutes** -> [Follow the Start Here path](docs/START_HERE.md)
+3. **Build the core loop** -> [Read Quick Start](docs/QUICK_START.md)
+4. **Understand the API** -> [Read API docs](docs/API.md)
+5. **Explore examples** -> [Explore example code](examples/)
+6. **Use it** -> [Buy the preset pack](https://echopathxr.com/product/preset-pack-starter-edition/)
+7. **Ship it** -> [Get plugin + support](https://echopathxr.com/echopath-memory-layer/)
+
+---
+
+## Run Locally
+
+This repo is static. Any simple static server works.
+
+```bash
+python3 -m http.server 8080 -d docs
+```
+
+Then open:
+
+```text
+http://localhost:8080/
+```
+
+Alternative:
+
+```bash
+npx serve docs
+```
 
 ---
 
@@ -40,6 +75,25 @@ Player hides in closet repeatedly
   -> memory crosses threshold
   -> NPC investigates the closet
 ```
+
+---
+
+## Beginner API Rule
+
+Use `writeEngram(...)` first.
+
+```js
+memory.writeEngram({
+  position: player.position,
+  eventType: "hiding",
+  strength: 0.32,
+  source: "player",
+  tags: ["stealth", "repeat_behavior"],
+  radius: 2
+})
+```
+
+Use `writeEvent(...)` when you need a lower-level explicit event writer for adapters, deterministic replay, or direct anchor targeting.
 
 ---
 
@@ -87,10 +141,12 @@ The public examples are designed for learning and prototyping. Production plugin
 docs/
   index.html
   styles.css
-  game.js
   API.md
+  START_HERE.md
   QUICK_START.md
   INTEGRATION_GUIDE.md
+  ADAPTER_CONTRACT.md
+  MEMORY_LITE_PACKAGING.md
   CAN_I_BUILD_THIS_MYSELF.md
   PUBLIC_PRIVATE_BOUNDARY.md
 
@@ -101,10 +157,25 @@ examples/
   web-adapter.js
   unity-example-scene.md
 
-public-demo/
-  room-remembers/
-  memory-visualizer/
+docs/room-remembers/
+  index.html
+  game.js
+
+docs/memory-visualizer/
 ```
+
+---
+
+## API Stability
+
+The public API contract is currently documented as a draft Memory Lite surface.
+
+Compatibility expectations:
+
+- method names in `docs/API.md` should remain stable within the v0.x public examples;
+- breaking changes should be documented in API notes before demos/examples rely on them;
+- beginner examples should prefer `writeEngram(...)`;
+- `writeEvent(...)` remains available as the lower-level adapter/replay path.
 
 ---
 
@@ -117,6 +188,7 @@ Use this repo if you want to understand the pattern:
 - decay
 - reinforcement
 - threshold triggers
+- agent memory queries
 - engine adapter mapping
 
 For production use, EchoPath XR plans to provide plugin builds, tuned presets, visualizer support, and studio integration support.
@@ -145,3 +217,5 @@ Commercial plugin builds, preset products, and partner integrations may use sepa
 This repo teaches the pattern.
 EchoPath XR distributes the production runtime, plugins, presets, and partner builds.
 ```
+
+Next read: [Start Here in 10 Minutes](docs/START_HERE.md)
