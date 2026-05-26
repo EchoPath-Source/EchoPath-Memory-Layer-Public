@@ -1,0 +1,20 @@
+{
+  "name": "com.echopath.memory-layer",
+  "version": "0.1.0-preview",
+  "displayName": "EchoPath Memory Layer",
+  "description": "Public Phase 1 Unity scaffold for EchoPath Memory Layer. Register anchors, write spatial memory events, decay/reinforce memory, and trigger world behavior when thresholds are crossed.",
+  "unity": "2021.3",
+  "author": {
+    "name": "EchoPath XR",
+    "url": "https://echopathxr.com"
+  },
+  "keywords": [
+    "echopath",
+    "memory-layer",
+    "spatial-memory",
+    "ai",
+    "xr",
+    "gameplay"
+  ],
+  "license": "SEE LICENSE IN LICENSE.md"
+}
