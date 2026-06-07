@@ -1,0 +1,15 @@
+{
+  "name": "echopath-memory-layer-public",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Public-safe EchoPath Memory Layer documentation, demos, and Memory Lite reference runtime.",
+  "scripts": {
+    "test": "node --test",
+    "validate:presets": "node scripts/validate-presets.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}
