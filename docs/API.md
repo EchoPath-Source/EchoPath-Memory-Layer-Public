@@ -6,6 +6,8 @@ This document defines the public integration contract for EchoPath Memory Layer 
 
 The full production runtime may differ internally. The public API contract exists so developers can understand the intended integration pattern without exposing private runtime internals, protected research models, protected future-stack internals, or paid plugin source.
 
+The public repo now includes a lightweight implementation of this contract under [`src/memory-lite/`](../src/memory-lite/) for demos and examples. See [`MEMORY_LITE_RUNTIME.md`](MEMORY_LITE_RUNTIME.md).
+
 ---
 
 ## Core Loop
@@ -41,8 +43,10 @@ A spatial zone, object, waypoint, route, or region that can accumulate memory.
   decayRate: 0.02,
   reinforcementMultiplier: 1.2,
   memory: {},
+  thresholdRules: [],
   tags: ["hide_spot"],
-  metadata: {}
+  metadata: {},
+  visualStyle: {}
 }
 ```
 
@@ -89,6 +93,7 @@ writeEvent(event)
 step(deltaTime)
 getAnchor(id)
 getMemory(anchorId, memoryType)
+queryMemory({ position, radius, type })
 getLocalMemoryGradient({ position, radius, type })
 onTrigger(callback)
 saveState()
@@ -140,7 +145,7 @@ memory.writeEvent({ type: "sound", targetAnchorId: "hallway", strength: 0.20 })
 
 ## step(deltaTime)
 
-Advances memory decay, propagation, and trigger checks.
+Advances memory decay and trigger checks.
 
 ```js
 function update(dt) {
@@ -162,12 +167,12 @@ const hiding = memory.getMemory("closet", "hiding")
 
 ---
 
-## getLocalMemoryGradient(query)
+## queryMemory / getLocalMemoryGradient
 
 Agent-facing query interface. NPCs can call this every few frames to convert spatial memory into behavior.
 
 ```js
-const readout = memory.getLocalMemoryGradient({
+const readout = memory.queryMemory({
   position: npc.position,
   radius: 5,
   type: "hiding"
@@ -210,20 +215,8 @@ memory.onTrigger((event) => {
 Cross-session memory should use versioned state envelopes.
 
 ```js
-const snapshot = {
-  schema: "echopath.memory_state",
-  version: "0.1.0",
-  savedAt: new Date().toISOString(),
-  engine: "memory-lite",
-  metadata: {},
-  field: memory.saveState()
-}
-```
-
-Later:
-
-```js
-const restored = MemoryField.loadState(snapshot.field)
+const snapshot = memory.saveState({ scene: "room_remembers" })
+const restored = MemoryLiteField.loadState(snapshot)
 ```
 
 For public examples, save/load is local and developer-controlled. Production plugin builds may add cloud sync, project-specific schema migrations, replay logs, and engine-native persistence.
@@ -255,6 +248,7 @@ Public API:
 - agent query contract
 - trigger contract
 - save/load shape
+- public-safe Memory Lite implementation
 
 Private implementation:
 
@@ -269,11 +263,12 @@ Private implementation:
 
 ## Status
 
-Draft API contract for public examples and early adopters. This API is intended as the public-facing Memory Lite surface, not the full private engine.
+Draft API contract for public examples and early adopters. This API is implemented in a lightweight form by Memory Lite, not the full private engine.
 
 Next reads:
 
 ```text
+docs/MEMORY_LITE_RUNTIME.md
 docs/RECIPES.md
 docs/ADAPTER_CONTRACT.md
 docs/VERSIONING.md
