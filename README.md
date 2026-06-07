@@ -4,19 +4,19 @@
 
 EchoPath Memory Layer is a spatial-memory product surface for games, XR, and simulation prototypes. It helps worlds remember repeated behavior, decay or reinforce that memory over time, and turn remembered history into readable game responses.
 
-This public repo contains Phase 1 browser demos, public-safe docs, examples, starter preset summaries, and product wrappers. It is intentionally not a dump of private runtime internals or protected research code.
+This public repo contains Phase 1 browser demos, public-safe docs, examples, starter preset summaries, product wrappers, and a lightweight **Memory Lite** runtime abstraction. It is intentionally not a dump of private runtime internals or protected research code.
 
-Website: https://echopathxr.com
-Product page: https://echopathxr.com/echopath-memory-layer/
+Website: https://echopathxr.com  
+Product page: https://echopathxr.com/echopath-memory-layer/  
 Contact: contact@echopathxr.com
 
 ---
 
 ## Try Now
 
-1. **The Room Remembers** — click zones, write memory, watch thresholds trigger behavior.
+1. **The Room Remembers** — click zones, write memory, watch thresholds trigger behavior.  
    Demo: [GitHub Pages hub](https://echopath-source.github.io/EchoPath-Memory-Layer-Public/) / local path: [`docs/room-remembers/`](docs/room-remembers/)
-2. **Memory Visualizer / Debug Heatmap** — inspect public-safe memory pressure across anchors.
+2. **Memory Visualizer / Debug Heatmap** — inspect public-safe memory pressure across anchors.  
    Demo: [GitHub Pages hub](https://echopath-source.github.io/EchoPath-Memory-Layer-Public/) / local path: [`docs/memory-visualizer/`](docs/memory-visualizer/)
 
 Run locally:
@@ -50,7 +50,31 @@ Player hides in closet repeatedly
   -> NPC investigates the closet
 ```
 
-The public Phase 1 repo proves this pattern with browser demos and product wrappers while keeping the production runtime and protected research lanes private.
+The public Phase 1 repo proves this pattern with browser demos, product wrappers, starter preset summaries, and Memory Lite while keeping the production runtime and protected research lanes private.
+
+---
+
+## Memory Lite Public Runtime
+
+Memory Lite is the public-safe runtime abstraction for examples and product previews.
+
+It includes:
+
+- `MemoryAnchor`
+- `MemoryLiteField`
+- `writeEngram(...)`
+- `queryMemory(...)` / `getLocalMemoryGradient(...)`
+- `onTrigger(...)`
+- `saveState(...)` / `loadState(...)`
+- public-safe preset summary helpers
+
+Start here:
+
+- [`docs/MEMORY_LITE_RUNTIME.md`](docs/MEMORY_LITE_RUNTIME.md)
+- [`src/memory-lite/`](src/memory-lite/)
+- [`examples/memory-lite-basic.js`](examples/memory-lite-basic.js)
+
+Memory Lite is intentionally lightweight. It makes the public repo usable without exposing private production runtime internals, paid plugin source, protected research implementation, private tuning constants, partner details, or future-stack internals.
 
 ---
 
@@ -109,6 +133,7 @@ This repo includes:
 - public Phase 1 browser demos;
 - public product wrapper docs;
 - public-safe starter preset summaries;
+- Memory Lite runtime abstraction;
 - Memory Ledger Export baseline documentation;
 - quick-start, API, and integration docs;
 - examples that teach the Memory Layer pattern;
@@ -135,7 +160,7 @@ Unity and Godot folders in this repo are later-phase adapter references. They he
 Phase 1 is:
 
 ```text
-browser demos + public product wrappers + starter preset summaries + Memory Ledger Export baseline
+browser demos + public product wrappers + starter preset summaries + Memory Lite + Memory Ledger Export baseline
 ```
 
 ---
@@ -147,6 +172,7 @@ Recommended path:
 ```text
 README.md
   -> docs/PHASE_1_PRODUCT_WRAPPERS.md
+  -> docs/MEMORY_LITE_RUNTIME.md
   -> docs/products/ROOM_REMEMBERS.md
   -> docs/products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md
   -> docs/products/PRESET_PACK_STARTER_EDITION.md
@@ -170,6 +196,7 @@ Additional developer docs:
 ```text
 docs/
   index.html
+  MEMORY_LITE_RUNTIME.md
   PHASE_1_PRODUCT_WRAPPERS.md
   KNOWN_LIMITATIONS.md
   PUBLIC_PRIVATE_BOUNDARY.md
@@ -182,11 +209,18 @@ docs/
   room-remembers/
   memory-visualizer/
 
+src/memory-lite/
+  MemoryAnchor.js
+  MemoryLiteField.js
+  presets.js
+  index.js
+
 presets/starter/
   README.md
   preset-summary.json
 
 examples/
+  memory-lite-basic.js
   web-adapter.js
   unity-bridge.cs
   godot-bridge.gd
