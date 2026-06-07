@@ -1,43 +1,25 @@
-# EchoPath Memory Layer — Public Examples
+# EchoPath Memory Layer Public
 
 **Make your worlds remember.**
 
-EchoPath Memory Layer is adaptive spatial-memory middleware for games, XR, and simulation prototypes.
+EchoPath Memory Layer is a spatial-memory product surface for games, XR, and simulation prototypes. It helps worlds remember repeated behavior, decay or reinforce that memory over time, and turn remembered history into readable game responses.
 
-This public repository contains examples, documentation, and browser demos that show the integration pattern. The full runtime, paid plugin builds, research prototypes, and future EchoPath stack internals are distributed separately through official downloads, partner builds, and EchoPath XR channels.
+This public repo contains Phase 1 browser demos, public-safe docs, examples, starter preset summaries, and product wrappers. It is intentionally not a dump of private runtime internals or protected research code.
 
-Website: https://echopathxr.com  
-Product page: https://echopathxr.com/echopath-memory-layer/  
+Website: https://echopathxr.com
+Product page: https://echopathxr.com/echopath-memory-layer/
 Contact: contact@echopathxr.com
 
 ---
 
-## Start Here
+## Try Now
 
-For the fastest onboarding path, follow:
+1. **The Room Remembers** — click zones, write memory, watch thresholds trigger behavior.
+   Demo: [GitHub Pages hub](https://echopath-source.github.io/EchoPath-Memory-Layer-Public/) / local path: [`docs/room-remembers/`](docs/room-remembers/)
+2. **Memory Visualizer / Debug Heatmap** — inspect public-safe memory pressure across anchors.
+   Demo: [GitHub Pages hub](https://echopath-source.github.io/EchoPath-Memory-Layer-Public/) / local path: [`docs/memory-visualizer/`](docs/memory-visualizer/)
 
-```text
-README.md
-  -> docs/START_HERE.md
-  -> docs/QUICK_START.md
-  -> docs/API.md
-  -> examples/README.md
-  -> docs/ADAPTER_CONTRACT.md
-```
-
-1. **See it live** -> [Try the GitHub demo](https://echopath-source.github.io/EchoPath-Memory-Layer-Public/)
-2. **Start in 10 minutes** -> [Follow the Start Here path](docs/START_HERE.md)
-3. **Build the core loop** -> [Read Quick Start](docs/QUICK_START.md)
-4. **Understand the API** -> [Read API docs](docs/API.md)
-5. **Explore examples** -> [Explore example code](examples/)
-6. **Use it** -> [Buy the preset pack](https://echopathxr.com/product/preset-pack-starter-edition/)
-7. **Ship it** -> [Get plugin + support](https://echopathxr.com/echopath-memory-layer/)
-
----
-
-## Run Locally
-
-This repo is static. Any simple static server works.
+Run locally:
 
 ```bash
 python3 -m http.server 8080 -d docs
@@ -49,19 +31,11 @@ Then open:
 http://localhost:8080/
 ```
 
-Alternative:
-
-```bash
-npx serve docs
-```
-
 ---
 
-## What Is This?
+## What Is EchoPath Memory Layer?
 
-EchoPath Memory Layer helps developers create environments that remember repeated behavior and respond over time.
-
-Core loop:
+EchoPath Memory Layer is middleware/product infrastructure for adaptive worlds:
 
 ```text
 Scene event -> spatial memory -> decay / reinforcement -> threshold response -> game behavior
@@ -72,28 +46,59 @@ Example:
 ```text
 Player hides in closet repeatedly
   -> closet accumulates hiding memory
-  -> memory crosses threshold
+  -> memory crosses a response threshold
   -> NPC investigates the closet
 ```
 
+The public Phase 1 repo proves this pattern with browser demos and product wrappers while keeping the production runtime and protected research lanes private.
+
 ---
 
-## Beginner API Rule
+## Phase 1 Product Surfaces
 
-Use `writeEngram(...)` first.
+| Surface | What it is | Wrapper |
+| --- | --- | --- |
+| Room Remembers | Browser demo proving spatial memory, reinforcement, decay, and threshold response. | [`docs/products/ROOM_REMEMBERS.md`](docs/products/ROOM_REMEMBERS.md) |
+| Memory Visualizer / Debug Heatmap | Public-safe visualization for memory intensity and anchor pressure. | [`docs/products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md`](docs/products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md) |
+| Preset Pack Starter Edition | Ten named behavior templates for common memory patterns. | [`docs/products/PRESET_PACK_STARTER_EDITION.md`](docs/products/PRESET_PACK_STARTER_EDITION.md) |
+| Memory Ledger Export | Public baseline for readable replay/export summaries. | [`docs/products/MEMORY_LEDGER_EXPORT.md`](docs/products/MEMORY_LEDGER_EXPORT.md) |
+| Public product wrappers | Product-readable docs that connect demos, presets, export, and website copy. | [`docs/PHASE_1_PRODUCT_WRAPPERS.md`](docs/PHASE_1_PRODUCT_WRAPPERS.md) |
 
-```js
-memory.writeEngram({
-  position: player.position,
-  eventType: "hiding",
-  strength: 0.32,
-  source: "player",
-  tags: ["stealth", "repeat_behavior"],
-  radius: 2
-})
+---
+
+## Preset Pack Starter Edition
+
+Preset Pack Starter Edition is the Phase 1 starter set of public-safe memory behavior templates:
+
+1. Haunted Room
+2. Predator Trail
+3. Safe Path
+4. Danger Echo
+5. Loot Memory
+6. Crowd Wear
+7. Shrine Activation
+8. Animal Territory
+9. NPC Habit
+10. Encounter Scar
+
+Public summary files:
+
+- [`presets/starter/README.md`](presets/starter/README.md)
+- [`presets/starter/preset-summary.json`](presets/starter/preset-summary.json)
+
+The public preset summary intentionally omits private coefficients, raw runtime internals, protected tuning rules, research details, partner details, and future-stack implementation details.
+
+---
+
+## Memory Ledger Export
+
+Memory Ledger Export is the Phase 1 baseline for explaining what happened during a memory session:
+
+```text
+session -> anchors -> memory events -> channel totals -> triggered actions
 ```
 
-Use `writeEvent(...)` when you need a lower-level explicit event writer for adapters, deterministic replay, or direct anchor targeting.
+For Phase 1, this repo provides the public wrapper and baseline language, not a private replay processor or production export service. Start with [`docs/products/MEMORY_LEDGER_EXPORT.md`](docs/products/MEMORY_LEDGER_EXPORT.md).
 
 ---
 
@@ -101,37 +106,62 @@ Use `writeEvent(...)` when you need a lower-level explicit event writer for adap
 
 This repo includes:
 
-- public API documentation
-- quick-start docs
-- Unity and Godot bridge examples
-- web adapter example
-- browser demo scaffolds
-- integration guide
-- “Can I build this myself?” transparency page
+- public Phase 1 browser demos;
+- public product wrapper docs;
+- public-safe starter preset summaries;
+- Memory Ledger Export baseline documentation;
+- quick-start, API, and integration docs;
+- examples that teach the Memory Layer pattern;
+- Unity/Godot adapter scaffolds as parked later-phase references.
 
 This repo does **not** include:
 
-- private production runtime
-- paid plugin source
-- EchoPath Neuro research prototypes
-- Collapse Neural Network v7+ research models
-- Q-RRG convergence internals
-- future EchoPath Cognition / Native / Director internals
-- partner-specific builds
+- production runtime internals;
+- paid plugin source;
+- private tuning constants or protected coefficients;
+- EchoPath Neuro code or research prototypes;
+- protected future-stack internals;
+- partner builds, partner details, or partner-specific optimization layers;
+- unvalidated research claims.
+
+Boundary details: [`docs/PUBLIC_PRIVATE_BOUNDARY.md`](docs/PUBLIC_PRIVATE_BOUNDARY.md)
 
 ---
 
-## Developer Funnel
+## Unity / Godot Status
+
+Unity and Godot folders in this repo are later-phase adapter references. They help developers understand how Memory Layer concepts may map into engines, but they are **not** the current Phase 1 product release.
+
+Phase 1 is:
 
 ```text
-Try the demo
-  -> learn the pattern
-  -> prototype with examples
-  -> use starter presets
-  -> request plugin / partner support
+browser demos + public product wrappers + starter preset summaries + Memory Ledger Export baseline
 ```
 
-The public examples are designed for learning and prototyping. Production plugin builds and supported integrations are distributed separately through EchoPath XR.
+---
+
+## Start Here
+
+Recommended path:
+
+```text
+README.md
+  -> docs/PHASE_1_PRODUCT_WRAPPERS.md
+  -> docs/products/ROOM_REMEMBERS.md
+  -> docs/products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md
+  -> docs/products/PRESET_PACK_STARTER_EDITION.md
+  -> docs/products/MEMORY_LEDGER_EXPORT.md
+  -> docs/PUBLIC_PRIVATE_BOUNDARY.md
+  -> docs/START_HERE.md
+  -> docs/QUICK_START.md
+```
+
+Additional developer docs:
+
+- [`docs/API.md`](docs/API.md)
+- [`docs/INTEGRATION_GUIDE.md`](docs/INTEGRATION_GUIDE.md)
+- [`docs/ADAPTER_CONTRACT.md`](docs/ADAPTER_CONTRACT.md)
+- [`examples/`](examples/)
 
 ---
 
@@ -140,66 +170,37 @@ The public examples are designed for learning and prototyping. Production plugin
 ```text
 docs/
   index.html
-  styles.css
-  API.md
-  START_HERE.md
-  QUICK_START.md
-  INTEGRATION_GUIDE.md
-  ADAPTER_CONTRACT.md
-  MEMORY_LITE_PACKAGING.md
-  CAN_I_BUILD_THIS_MYSELF.md
+  PHASE_1_PRODUCT_WRAPPERS.md
+  KNOWN_LIMITATIONS.md
   PUBLIC_PRIVATE_BOUNDARY.md
+  WEBSITE_INTEGRATION_NOTES.md
+  products/
+    ROOM_REMEMBERS.md
+    MEMORY_VISUALIZER_DEBUG_HEATMAP.md
+    PRESET_PACK_STARTER_EDITION.md
+    MEMORY_LEDGER_EXPORT.md
+  room-remembers/
+  memory-visualizer/
+
+presets/starter/
+  README.md
+  preset-summary.json
 
 examples/
-  README.md
+  web-adapter.js
   unity-bridge.cs
   godot-bridge.gd
-  web-adapter.js
-  unity-example-scene.md
 
-docs/room-remembers/
-  index.html
-  game.js
-
-docs/memory-visualizer/
+plugins/
+  unity/   later-phase adapter reference
+  godot/   later-phase adapter reference
 ```
 
 ---
 
-## API Stability
+## Website Integration
 
-The public API contract is currently documented as a draft Memory Lite surface.
-
-Compatibility expectations:
-
-- method names in `docs/API.md` should remain stable within the v0.x public examples;
-- breaking changes should be documented in API notes before demos/examples rely on them;
-- beginner examples should prefer `writeEngram(...)`;
-- `writeEvent(...)` remains available as the lower-level adapter/replay path.
-
----
-
-## For Developers
-
-Use this repo if you want to understand the pattern:
-
-- anchors / zones
-- memory events
-- decay
-- reinforcement
-- threshold triggers
-- agent memory queries
-- engine adapter mapping
-
-For production use, EchoPath XR plans to provide plugin builds, tuned presets, visualizer support, and studio integration support.
-
----
-
-## For Researchers
-
-EchoPath Memory Layer is informed by deeper research into memory-field computation and adaptive systems, but this public repository is not the research repository.
-
-The research lane is separate under EchoPath Neuro and is not included here.
+Website integration notes are tracked in [`docs/WEBSITE_INTEGRATION_NOTES.md`](docs/WEBSITE_INTEGRATION_NOTES.md). Public repo wrappers should be linked from the website after review, and Preset Pack product image/copy polish remains the next website task.
 
 ---
 
@@ -214,8 +215,6 @@ Commercial plugin builds, preset products, and partner integrations may use sepa
 ## Anchor Statement
 
 ```text
-This repo teaches the pattern.
-EchoPath XR distributes the production runtime, plugins, presets, and partner builds.
+This repo proves the public Memory Layer product surface.
+EchoPath XR distributes the production runtime, paid plugins, presets, and partner builds separately.
 ```
-
-Next read: [Start Here in 10 Minutes](docs/START_HERE.md)

@@ -1,21 +1,21 @@
 # The Room Remembers
 
-Public demo placeholder for the EchoPath Memory Layer browser sandbox.
+Public Phase 1 browser demo for EchoPath Memory Layer.
 
 ## Purpose
 
 Show the core loop:
 
 ```text
-Player behavior -> spatial memory -> threshold response
+Player behavior -> spatial memory -> decay/reinforcement -> threshold response
 ```
 
-## Website
+## Where To Try It
 
-https://echopathxr.com/echopath-memory-layer/
+- GitHub Pages hub: https://echopath-source.github.io/EchoPath-Memory-Layer-Public/
+- Repo demo source: [`docs/room-remembers/`](../../docs/room-remembers/)
+- Product wrapper: [`docs/products/ROOM_REMEMBERS.md`](../../docs/products/ROOM_REMEMBERS.md)
 
-## Notes
+## Boundary
 
-The full website-safe demo may be deployed directly on echopathxr.com or copied here for GitHub Pages distribution.
-
-This public folder should not expose raw private runtime internals.
+This public folder should not expose private runtime internals, private tuning constants, EchoPath Neuro implementation, partner details, or protected future-stack internals.

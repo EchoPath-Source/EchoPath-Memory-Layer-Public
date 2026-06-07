@@ -6,6 +6,12 @@ They are not the full production plugin or private runtime.
 
 ---
 
+## Phase 1 Positioning
+
+These examples are learning references. The current Phase 1 product release is browser demos, public product wrappers, starter preset summaries, and the Memory Ledger Export baseline. Unity and Godot examples are parked later-phase adapter references, not production plugin releases.
+
+---
+
 ## Example: The Closet Investigates
 
 ### Setup
@@ -47,6 +53,6 @@ They are not the full production plugin or private runtime.
 
 Use these examples to learn the pattern and prototype.
 
-Official runtime, plugins, presets, and partner builds are distributed by EchoPath XR.
+Production runtime internals, paid plugin source, private tuning constants, EchoPath Neuro implementation, protected future-stack internals, and partner builds are not included here. Official runtime, paid products, and partner support are distributed by EchoPath XR.
 
 Website: https://echopathxr.com

@@ -73,9 +73,9 @@ It does not apply to private internals:
 ```text
 production plugin source
 private runtime optimizations
-CNN-SoCT research engine
-V8/V9 prototypes
-Q-RRG internals
+protected research engine
+experimental research prototypes
+protected future-stack internals
 partner builds
 ```
 
