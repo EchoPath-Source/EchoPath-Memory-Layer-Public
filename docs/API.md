@@ -4,7 +4,7 @@
 
 This document defines the public integration contract for EchoPath Memory Layer examples.
 
-The full production runtime may differ internally. The public API contract exists so developers can understand the intended integration pattern without exposing private runtime internals, CNN-SoCT research models, Q-RRG convergence layers, or paid plugin source.
+The full production runtime may differ internally. The public API contract exists so developers can understand the intended integration pattern without exposing private runtime internals, protected research models, protected future-stack internals, or paid plugin source.
 
 ---
 
@@ -260,9 +260,9 @@ Private implementation:
 
 - optimized production runtime internals
 - paid plugin source
-- CNN-SoCT research engine
-- V8/V9 experimental models
-- Q-RRG / Cognition convergence internals
+- protected research engines
+- experimental research models
+- protected future-stack internals
 - partner-specific builds
 
 ---

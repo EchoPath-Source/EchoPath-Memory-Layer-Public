@@ -40,9 +40,9 @@ web adapter example
 ## What Does Not Belong in Memory Lite
 
 ```text
-CNN-SoCT PyTorch engine
-V8 / V9 research prototypes
-Q-RRG kernel internals
+protected research engines
+experimental research prototypes
+protected future-stack internals
 private tuning parameters
 paid plugin source
 partner-specific builds

@@ -1,20 +1,30 @@
-# EchoPath Memory Layer — Godot Addon Scaffold
+# EchoPath Memory Layer — Godot Adapter Scaffold
 
-**Status:** public Phase 1 scaffold  
-**Target:** Godot 4.x  
-**Boundary:** reference addon scaffold, not the private production runtime
+**Status:** later-phase adapter reference
+**Target:** Godot 4.x
+**Boundary:** reference scaffold only, not the Phase 1 product release and not the private production runtime
 
 ## Purpose
 
-This Godot addon gives developers a clean starting point for EchoPath Memory Layer integration.
+This Godot folder gives developers a public-safe reference for how EchoPath Memory Layer concepts may map into a Godot project later.
 
-It demonstrates the core loop:
+It demonstrates the conceptual loop:
 
 ```text
 Godot event -> memory anchor -> memory write -> decay/reinforcement -> threshold trigger -> game behavior
 ```
 
-## Install During Phase 1
+## Phase 1 Positioning
+
+The current Phase 1 product release is:
+
+```text
+browser demos + public product wrappers + starter preset summaries + Memory Ledger Export baseline
+```
+
+Godot packaging is parked for a later phase. Do not present this scaffold as a production addon release.
+
+## Reference Install During Exploration
 
 Copy the addon folder into your Godot project:
 
@@ -28,45 +38,32 @@ Then enable it from:
 Project -> Project Settings -> Plugins -> EchoPath Memory Layer
 ```
 
-## Quick Start
-
-1. Add `EchoPathMemoryBridge.gd` to a Node in your scene.
-2. Register anchors for rooms, hiding spots, patrol points, or interaction zones.
-3. Add threshold rules for behavior triggers.
-4. Call helper methods from player/NPC scripts:
-
-```gdscript
-memory_bridge.write_hiding("closet")
-memory_bridge.write_sound("hallway")
-memory_bridge.write_danger("basement")
-memory_bridge.write_safe("exit_zone")
-```
-
 ## Example Behavior
 
 ```text
 Player hides in closet repeatedly
   -> closet.hiding rises
-  -> threshold crosses 0.72
+  -> response threshold crosses
   -> npc.investigate action fires
 ```
 
 ## Public / Private Boundary
 
-This addon is intended for learning and lightweight prototyping.
+This addon is intended for learning and lightweight prototyping only.
 
 It does not include:
 
 - private production runtime;
+- paid plugin source;
 - paid preset pack internals;
-- Collapse Neural Network research models;
-- Q-RRG convergence logic;
-- partner-specific optimization layers.
+- private tuning constants or coefficients;
+- EchoPath Neuro implementation code or research prototypes;
+- protected future-stack internals;
+- partner-specific optimization layers or partner details.
 
 ## Next Steps
 
-- Add sample scene.
-- Add exported preset resources.
-- Add debug overlay.
-- Add preset pack import examples.
-- Promote to installable preview release when stable.
+- Keep this language aligned with Phase 1 wrappers.
+- Add sample scene only after wrapper review.
+- Add debug overlay only as public-safe adapter work.
+- Promote to an installable preview only in a later phase.

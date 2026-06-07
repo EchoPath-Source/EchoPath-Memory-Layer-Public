@@ -10,7 +10,7 @@ Adapters translate engine-specific events into the Memory Layer pattern:
 engine event -> memory anchor -> engram write -> threshold / query -> game behavior
 ```
 
-This is a public-facing contract only. Production plugins, private runtime internals, research models, Q-RRG convergence layers, and partner builds are distributed separately.
+This is a public-facing contract only. Production plugins, private runtime internals, protected research models, protected future-stack internals, and partner builds are distributed separately.
 
 ---
 
@@ -152,9 +152,9 @@ Public adapters may expose the Memory Lite contract.
 Public adapters must not expose:
 
 ```text
-CNN-SoCT PyTorch engine
-V8/V9 research models
-Q-RRG internals
+protected research engines
+experimental research models
+protected future-stack internals
 private tuning parameters
 paid plugin source
 partner runtime code

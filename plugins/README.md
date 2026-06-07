@@ -1,8 +1,14 @@
-# EchoPath Memory Layer — Plugin Track
+# EchoPath Memory Layer — Later-phase Adapter References
 
-This folder contains the public Phase 1 plugin scaffolds for EchoPath Memory Layer.
+This folder contains Unity and Godot adapter scaffolds for EchoPath Memory Layer.
 
-These packages are intentionally lightweight. They expose the Memory Lite pattern for engine integration without exposing the private production runtime, research prototypes, Q-RRG internals, or partner builds.
+**Phase 1 status:** parked later-phase references, not the current Phase 1 product release.
+
+Phase 1 is centered on:
+
+```text
+browser demos + public product wrappers + starter preset summaries + Memory Ledger Export baseline
+```
 
 ## Current Tracks
 
@@ -14,56 +20,55 @@ plugins/
     addons/echopath_memory_layer/
 ```
 
-## What These Plugins Do
+## What These Scaffolds Do
 
-The Phase 1 plugins help developers:
+The scaffolds help developers understand how the Memory Layer pattern may map into engines later:
 
 - register memory anchors in a scene;
-- write memory events such as hiding, sound, danger, safe, route, or presence;
-- decay and reinforce memory over time;
+- write public-safe memory events such as hiding, sound, danger, safe, route, or presence;
+- reason about decay and reinforcement;
 - trigger engine behavior when memory thresholds are crossed;
 - prototype worlds that remember repeated behavior.
 
-## What These Plugins Do Not Include
+## What These Scaffolds Do Not Include
 
-The public plugin scaffolds do not include:
+The public adapter scaffolds do not include:
 
 - the private EchoPath production runtime;
+- paid plugin source;
 - paid preset pack internals;
-- Collapse Neural Network v7/v8 research models;
-- Q-RRG convergence logic;
-- partner-specific optimization layers;
-- studio support code.
+- private tuning constants or coefficients;
+- EchoPath Neuro implementation code or research prototypes;
+- protected future-stack internals;
+- partner-specific optimization layers or partner details.
 
 ## Public / Paid / Partner Boundary
 
 ```text
 Public repo
-  -> concept docs, browser demos, starter adapters, public plugin scaffolds
+  -> browser demos, product wrappers, starter preset summaries, public-safe examples
 
-Preset pack
-  -> tuned behavior templates and starter design assets
+Phase 1 wrappers
+  -> Room Remembers, Memory Visualizer, Preset Pack Starter Edition, Memory Ledger Export
 
-Future plugin builds
-  -> packaged Unity/Godot distribution and visual debugging tools
+Later phases
+  -> packaged Unity/Godot adapter work after public wrappers stabilize
 
-Partner builds
-  -> custom integration, private runtime tuning, deeper EchoPath stack convergence
+Product/private channels
+  -> production runtime, paid plugins, supported integrations, partner builds
 ```
 
 ## Recommended Development Order
 
 1. Keep browser demos live and stable.
-2. Maintain public Unity and Godot scaffolds as learning/reference packages.
-3. Add preset import examples.
-4. Package Unity as a UPM-ready folder.
-5. Package Godot as an installable addon.
-6. Add visual debugging overlays.
-7. Move production-ready runtime pieces into paid/private distribution.
+2. Stabilize Phase 1 public product wrappers.
+3. Link wrappers from the website after review.
+4. Polish Preset Pack product image/copy.
+5. Revisit Unity/Godot packaging language only after the Phase 1 surface is stable.
 
 ## Anchor Statement
 
 ```text
-The public plugins teach the integration pattern.
-EchoPath XR distributes production builds, presets, and partner support.
+The public plugins are later-phase adapter references.
+Phase 1 is demos, wrappers, starter presets, and ledger export baseline.
 ```

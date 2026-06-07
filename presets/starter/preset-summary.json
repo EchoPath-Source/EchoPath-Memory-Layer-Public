@@ -1,0 +1,99 @@
+{
+  "packId": "preset_pack_starter_edition",
+  "name": "Preset Pack Starter Edition",
+  "phase": "Phase 1",
+  "publicSafe": true,
+  "boundary": "Public-safe preset summaries only. No private runtime internals, private coefficients, protected research details, partner details, or future-stack implementation details are included.",
+  "presets": [
+    {
+      "id": "haunted_room",
+      "name": "Haunted Room",
+      "category": "atmosphere",
+      "summary": "A room becomes more unsettling as suspicious or fearful activity repeats.",
+      "suggestedUseCases": ["horror rooms", "stealth hideouts", "reactive ambience"],
+      "publicSafeActionThemes": ["ambient shift", "NPC suspicion", "room tension"],
+      "publicSafe": true
+    },
+    {
+      "id": "predator_trail",
+      "name": "Predator Trail",
+      "category": "navigation-pressure",
+      "summary": "Repeated movement leaves a trail that can attract or guide a hunter-like response.",
+      "suggestedUseCases": ["survival games", "predator AI", "tracking encounters"],
+      "publicSafeActionThemes": ["trail pressure", "pursuit hint", "route attention"],
+      "publicSafe": true
+    },
+    {
+      "id": "safe_path",
+      "name": "Safe Path",
+      "category": "guidance",
+      "summary": "Frequently successful routes become recognizable as safer paths.",
+      "suggestedUseCases": ["tutorial routes", "accessibility guidance", "stealth navigation"],
+      "publicSafeActionThemes": ["guidance cue", "safe route highlight", "reduced tension"],
+      "publicSafe": true
+    },
+    {
+      "id": "danger_echo",
+      "name": "Danger Echo",
+      "category": "hazard-memory",
+      "summary": "Dangerous locations retain warning pressure after repeated threats.",
+      "suggestedUseCases": ["hazard zones", "combat arenas", "environmental warnings"],
+      "publicSafeActionThemes": ["warning cue", "enemy caution", "hazard recall"],
+      "publicSafe": true
+    },
+    {
+      "id": "loot_memory",
+      "name": "Loot Memory",
+      "category": "exploration",
+      "summary": "Looted or valuable areas remember player attention and can change future incentives.",
+      "suggestedUseCases": ["exploration loops", "treasure rooms", "resource routes"],
+      "publicSafeActionThemes": ["interest marker", "resource depletion cue", "return incentive"],
+      "publicSafe": true
+    },
+    {
+      "id": "crowd_wear",
+      "name": "Crowd Wear",
+      "category": "social-space",
+      "summary": "Repeated crowd movement makes a space feel worn, busy, or socially stressed.",
+      "suggestedUseCases": ["city hubs", "festival scenes", "simulation spaces"],
+      "publicSafeActionThemes": ["crowd pressure", "path wear", "ambient density"],
+      "publicSafe": true
+    },
+    {
+      "id": "shrine_activation",
+      "name": "Shrine Activation",
+      "category": "ritual-interaction",
+      "summary": "Repeated interactions build toward a visible ritual or shrine response.",
+      "suggestedUseCases": ["ritual puzzles", "interactive shrines", "progressive world state"],
+      "publicSafeActionThemes": ["activation cue", "ritual buildup", "state change"],
+      "publicSafe": true
+    },
+    {
+      "id": "animal_territory",
+      "name": "Animal Territory",
+      "category": "territory",
+      "summary": "Creature presence and player intrusion shape territorial pressure.",
+      "suggestedUseCases": ["wildlife AI", "survival territories", "creature dens"],
+      "publicSafeActionThemes": ["territory warning", "creature attention", "intrusion response"],
+      "publicSafe": true
+    },
+    {
+      "id": "npc_habit",
+      "name": "NPC Habit",
+      "category": "routine",
+      "summary": "Repeated NPC behavior makes locations feel habitual and expected.",
+      "suggestedUseCases": ["daily routines", "simulation NPCs", "social stealth"],
+      "publicSafeActionThemes": ["habit cue", "routine expectation", "location familiarity"],
+      "publicSafe": true
+    },
+    {
+      "id": "encounter_scar",
+      "name": "Encounter Scar",
+      "category": "aftermath",
+      "summary": "Intense encounters leave a persistent scar that can affect later tone or behavior.",
+      "suggestedUseCases": ["boss arenas", "combat aftermath", "narrative spaces"],
+      "publicSafeActionThemes": ["aftermath marker", "tone shift", "return memory"],
+      "publicSafe": true
+    }
+  ]
+}

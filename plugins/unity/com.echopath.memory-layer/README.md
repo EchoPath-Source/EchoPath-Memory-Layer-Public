@@ -1,23 +1,33 @@
-# EchoPath Memory Layer — Unity Plugin Scaffold
+# EchoPath Memory Layer — Unity Adapter Scaffold
 
-**Status:** public Phase 1 scaffold  
-**Package:** `com.echopath.memory-layer`  
-**Target:** Unity 2021.3+  
-**Boundary:** reference plugin scaffold, not the private production runtime
+**Status:** later-phase adapter reference
+**Package:** `com.echopath.memory-layer`
+**Target:** Unity 2021.3+
+**Boundary:** reference scaffold only, not the Phase 1 product release and not the private production runtime
 
 ## Purpose
 
-This Unity package gives developers a clean starting point for EchoPath Memory Layer integration.
+This Unity folder gives developers a public-safe reference for how EchoPath Memory Layer concepts may map into a Unity project later.
 
-It demonstrates the core loop:
+It demonstrates the conceptual loop:
 
 ```text
 Unity event -> memory anchor -> memory write -> decay/reinforcement -> threshold trigger -> game behavior
 ```
 
-## Install During Phase 1
+## Phase 1 Positioning
 
-Use Unity Package Manager with a Git URL once the repo structure is stable:
+The current Phase 1 product release is:
+
+```text
+browser demos + public product wrappers + starter preset summaries + Memory Ledger Export baseline
+```
+
+Unity packaging is parked for a later phase. Do not present this scaffold as a production plugin release.
+
+## Reference Install During Exploration
+
+If you are exploring the scaffold, use Unity Package Manager with a Git URL once the repo structure is stable:
 
 ```text
 https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public.git?path=/plugins/unity/com.echopath.memory-layer
@@ -29,45 +39,32 @@ Or copy the package folder into your project:
 Assets/Packages/com.echopath.memory-layer/
 ```
 
-## Quick Start
-
-1. Add `EchoPathMemoryBridge` to a GameObject.
-2. Add anchors for rooms, hiding spots, patrol points, or interaction zones.
-3. Add memory rules for threshold-triggered behavior.
-4. Call helper methods from player/NPC scripts:
-
-```csharp
-memoryBridge.WriteHiding("closet");
-memoryBridge.WriteSound("hallway");
-memoryBridge.WriteDanger("basement");
-memoryBridge.WriteSafe("exit_zone");
-```
-
 ## Example Behavior
 
 ```text
 Player hides in closet repeatedly
   -> closet.hiding rises
-  -> threshold crosses 0.72
+  -> response threshold crosses
   -> npc.investigate action fires
 ```
 
 ## Public / Private Boundary
 
-This package is intended for learning and lightweight prototyping.
+This package is intended for learning and lightweight prototyping only.
 
 It does not include:
 
 - private production runtime;
+- paid plugin source;
 - paid preset pack internals;
-- Collapse Neural Network research models;
-- Q-RRG convergence logic;
-- partner-specific optimization layers.
+- private tuning constants or coefficients;
+- EchoPath Neuro implementation code or research prototypes;
+- protected future-stack internals;
+- partner-specific optimization layers or partner details.
 
 ## Next Steps
 
-- Add demo scene manifest.
-- Add ScriptableObject preset definitions.
-- Add visual debugging overlay.
-- Add preset pack import examples.
-- Promote to a packaged preview release when stable.
+- Keep this language aligned with Phase 1 wrappers.
+- Add demo scene manifest only after wrapper review.
+- Add visual debugging overlay only as public-safe adapter work.
+- Promote to a packaged preview only in a later phase.
