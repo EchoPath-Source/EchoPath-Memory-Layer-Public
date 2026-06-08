@@ -63,17 +63,21 @@ It includes:
 
 - `MemoryAnchor`
 - `MemoryLiteField`
+- `MemoryZone`
 - `writeEngram(...)`
 - `queryMemory(...)` / `getLocalMemoryGradient(...)`
 - `onTrigger(...)`
 - `saveState(...)` / `loadState(...)`
 - public-safe preset summary helpers
+- single-channel and multi-channel threshold rules
 
 Start here:
 
+- [`docs/MEMORY_LITE.md`](docs/MEMORY_LITE.md)
 - [`docs/MEMORY_LITE_RUNTIME.md`](docs/MEMORY_LITE_RUNTIME.md)
 - [`src/memory-lite/`](src/memory-lite/)
 - [`examples/memory-lite-basic.js`](examples/memory-lite-basic.js)
+- [`examples/memory-lite-preset-summary.js`](examples/memory-lite-preset-summary.js)
 
 Memory Lite is intentionally lightweight. It makes the public repo usable without exposing private production runtime internals, paid plugin source, protected research implementation, private tuning constants, partner details, or future-stack internals.
 
@@ -173,6 +177,7 @@ Recommended path:
 ```text
 README.md
   -> docs/PHASE_1_PRODUCT_WRAPPERS.md
+  -> docs/MEMORY_LITE.md
   -> docs/MEMORY_LITE_RUNTIME.md
   -> docs/products/ROOM_REMEMBERS.md
   -> docs/products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md
@@ -197,6 +202,7 @@ Additional developer docs:
 ```text
 docs/
   index.html
+  MEMORY_LITE.md
   MEMORY_LITE_RUNTIME.md
   PHASE_1_PRODUCT_WRAPPERS.md
   KNOWN_LIMITATIONS.md
@@ -213,6 +219,7 @@ docs/
 src/memory-lite/
   MemoryAnchor.js
   MemoryLiteField.js
+  MemoryZone.js
   presets.js
   index.js
 
@@ -222,6 +229,7 @@ presets/starter/
 
 examples/
   memory-lite-basic.js
+  memory-lite-preset-summary.js
   web-adapter.js
   unity-bridge.cs
   godot-bridge.gd

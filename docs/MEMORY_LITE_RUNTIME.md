@@ -12,6 +12,7 @@ Memory Lite includes:
 
 - `MemoryAnchor`
 - `MemoryLiteField`
+- `MemoryZone`
 - `writeEngram(...)`
 - `writeEvent(...)`
 - `queryMemory(...)`
@@ -41,6 +42,7 @@ Memory Lite does not include:
 import {
   MemoryAnchor,
   MemoryLiteField,
+  MemoryZone,
   applyPresetSummary,
 } from "../src/memory-lite/index.js";
 ```
@@ -77,6 +79,28 @@ memory.writeEngram({
 });
 ```
 
+## Memory zones
+
+`MemoryZone` groups multiple anchors into a room or area-level container:
+
+```js
+const zone = memory.addZone(new MemoryZone({
+  id: "room_01",
+  label: "Living Room",
+  anchors: [closetAnchor, doorwayAnchor],
+  tags: ["room", "horror"],
+  visualStyle: { debugColorHint: "danger", curve: "soft_bloom" }
+}));
+
+const roomTotals = zone.getMemoryTotals();
+const roomReadout = memory.queryZoneMemory("room_01", {
+  position: npc.position,
+  radius: 6
+});
+```
+
+Zones are intentionally lightweight. They provide product-preview grouping and readouts, not private simulation internals.
+
 ## Agent query
 
 ```js
@@ -94,11 +118,25 @@ if (readout.suggestedAction === "investigate memory hotspot") {
 ## Save / load
 
 ```js
-const snapshot = memory.saveState({ scene: "room_remembers" });
+const snapshot = memory.saveState({ metadata: { scene: "room_remembers" } });
 const restored = MemoryLiteField.loadState(snapshot);
 ```
 
 The state envelope is local and developer-controlled. Production persistence, migrations, and cloud save behavior belong to later private/product builds.
+
+## Threshold rules
+
+Threshold rules support a single memory channel:
+
+```js
+{ memoryType: "hiding", threshold: 0.7, actionKey: "npc.investigate" }
+```
+
+They also support public-safe multi-channel checks. A rule with `memoryTypes` fires when any listed channel crosses its threshold:
+
+```js
+{ memoryTypes: ["hiding", "sound"], threshold: 0.7, actionKey: "npc.search_area" }
+```
 
 ## Preset summary helpers
 
@@ -112,7 +150,7 @@ applyPresetSummary(memory, presetSummary, {
 });
 ```
 
-This uses public-safe action themes and visual style hints. It does not expose private preset coefficients or production implementation details.
+This uses public-safe action themes and visual style hints. It does not expose private preset coefficients or production implementation details. See [`../examples/memory-lite-preset-summary.js`](../examples/memory-lite-preset-summary.js) for a runnable preset-summary example.
 
 ## Boundary note
 

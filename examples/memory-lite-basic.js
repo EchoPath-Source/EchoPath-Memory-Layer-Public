@@ -52,7 +52,7 @@ const readout = memory.queryMemory({
 
 console.log("Agent readout:", readout);
 
-const snapshot = memory.saveState({ demo: "memory-lite-basic" });
+const snapshot = memory.saveState({ metadata: { demo: "memory-lite-basic" } });
 const restored = MemoryLiteField.loadState(snapshot);
 
 console.log("Restored hiding memory:", restored.getMemory("closet_01", "hiding"));

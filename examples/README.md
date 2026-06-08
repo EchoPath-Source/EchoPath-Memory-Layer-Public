@@ -40,11 +40,25 @@ These examples are learning references. The current Phase 1 product release is b
 
 ---
 
+## Memory Lite examples
+
+- `memory-lite-basic.js` — Node-only Memory Lite anchor, engram, trigger, query, and restore example.
+- `memory-lite-preset-summary.js` — Node-only starter preset summary example that loads `presets/starter/preset-summary.json`, creates public-safe preset anchors, groups them in a `MemoryZone`, writes sample engrams, queries memory, prints triggers, and saves a local state snapshot.
+
+Run them with:
+
+```bash
+node examples/memory-lite-basic.js
+node examples/memory-lite-preset-summary.js
+```
+
 ## Files
 
 - `unity-bridge.cs` — Unity C# bridge example
 - `godot-bridge.gd` — Godot bridge example
 - `web-adapter.js` — browser / JavaScript adapter example
+- `memory-lite-basic.js` — Memory Lite runtime preview example
+- `memory-lite-preset-summary.js` — starter preset summary integration example
 - `unity-example-scene.md` — step-by-step Unity setup
 
 ---
