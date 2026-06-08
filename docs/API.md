@@ -50,6 +50,27 @@ A spatial zone, object, waypoint, route, or region that can accumulate memory.
 }
 ```
 
+
+## Memory Zone
+
+A room, area, trail, arena, hub, or territory-level container that groups multiple memory anchors.
+
+```js
+{
+  id: "room_01",
+  label: "Living Room",
+  anchors: [closetAnchor, doorwayAnchor],
+  tags: ["room", "horror"],
+  metadata: {},
+  visualStyle: {
+    debugColorHint: "danger",
+    curve: "soft_bloom"
+  }
+}
+```
+
+Memory zones are public preview grouping objects. They expose aggregate readouts without exposing private runtime internals.
+
 ## Engram Event
 
 A memory-writing event. Public demos should prefer `writeEngram(...)`, which may target by anchor ID or by nearest position.
@@ -68,7 +89,7 @@ A memory-writing event. Public demos should prefer `writeEngram(...)`, which may
 
 ## Threshold Rule
 
-A rule that fires when a memory value crosses a threshold.
+A rule that fires when a memory value crosses a threshold. Use `memoryType` for a single channel, or `memoryTypes` for a public-safe multi-channel rule that fires when any listed channel crosses the threshold.
 
 ```js
 {
@@ -77,6 +98,19 @@ A rule that fires when a memory value crosses a threshold.
   memoryType: "hiding",
   threshold: 0.72,
   actionKey: "npc.investigate",
+  mode: "cooldown",
+  cooldownSeconds: 14
+}
+```
+
+Multi-channel example:
+
+```js
+{
+  id: "room_attention",
+  memoryTypes: ["hiding", "sound"],
+  threshold: 0.72,
+  actionKey: "npc.search_area",
   mode: "cooldown",
   cooldownSeconds: 14
 }
@@ -92,6 +126,9 @@ writeEngram({ anchorId, position, eventType, strength, source, tags, radius })
 writeEvent(event)
 step(deltaTime)
 getAnchor(id)
+addZone(zone)
+getZone(zoneId)
+queryZoneMemory(zoneId, query)
 getMemory(anchorId, memoryType)
 queryMemory({ position, radius, type })
 getLocalMemoryGradient({ position, radius, type })

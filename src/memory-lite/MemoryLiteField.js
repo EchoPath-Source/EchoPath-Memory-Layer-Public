@@ -1,4 +1,5 @@
 import { MemoryAnchor, distance3, normalizePosition } from "./MemoryAnchor.js";
+import { MemoryZone } from "./MemoryZone.js";
 
 const DEFAULT_CHANNELS = [
   "presence",
@@ -19,6 +20,7 @@ export class MemoryLiteField {
     this.reinforcementMultiplier = Number(reinforcementMultiplier);
     this.channels = new Set(channels);
     this.anchors = new Map();
+    this.zones = new Map();
     this.time = 0;
     this.triggerLog = [];
     this.triggerCallbacks = new Set();
@@ -33,6 +35,25 @@ export class MemoryLiteField {
 
   getAnchor(anchorId) {
     return this.anchors.get(anchorId) ?? null;
+  }
+
+  addZone(zoneLike) {
+    const zone = zoneLike instanceof MemoryZone ? zoneLike : new MemoryZone(zoneLike);
+    this.zones.set(zone.id, zone);
+    for (const anchor of zone.anchors.values()) {
+      this.anchors.set(anchor.id, anchor);
+    }
+    return zone;
+  }
+
+  getZone(zoneId) {
+    return this.zones.get(zoneId) ?? null;
+  }
+
+  queryZoneMemory(zoneId, query = {}) {
+    const zone = this.getZone(zoneId);
+    if (!zone) return null;
+    return zone.queryMemory(query);
   }
 
   onTrigger(callback) {
@@ -180,6 +201,7 @@ export class MemoryLiteField {
       time: this.time,
       metadata: { ...metadata },
       anchors: [...this.anchors.values()].map(anchor => anchor.toJSON()),
+      zones: [...this.zones.values()].map(zone => zone.toJSON()),
       triggerLog: this.triggerLog.map(trigger => ({ ...trigger })),
     };
   }
@@ -190,8 +212,13 @@ export class MemoryLiteField {
     }
     this.time = Number(state.time ?? 0);
     this.anchors.clear();
+    this.zones.clear();
     for (const anchor of state.anchors ?? []) {
       this.addAnchor(anchor);
+    }
+    for (const zoneLike of state.zones ?? []) {
+      const anchors = (zoneLike.anchors ?? []).map(anchorLike => this.getAnchor(anchorLike.id) ?? anchorLike);
+      this.addZone({ ...zoneLike, anchors });
     }
     this.triggerLog = (state.triggerLog ?? []).map(trigger => ({ ...trigger }));
     this.cooldowns.clear();
@@ -214,7 +241,8 @@ export class MemoryLiteField {
     const value = Number(anchor.memory[channel] ?? 0);
     const fired = [];
     for (const rule of anchor.thresholdRules ?? []) {
-      if (rule.memoryType !== channel && rule.channel !== channel) continue;
+      const ruleChannels = getRuleChannels(rule);
+      if (ruleChannels.length === 0 || !ruleChannels.includes(channel)) continue;
       if (value < Number(rule.threshold ?? Infinity)) continue;
       if (!this.canFire(rule, anchor)) continue;
 
@@ -252,6 +280,13 @@ export class MemoryLiteField {
     const key = `${anchor.id}:${rule.id ?? rule.actionKey ?? "rule"}`;
     this.cooldowns.set(key, this.time);
   }
+}
+
+function getRuleChannels(rule) {
+  if (Array.isArray(rule.memoryTypes)) {
+    return rule.memoryTypes.filter(memoryType => typeof memoryType === "string");
+  }
+  return [rule.memoryType, rule.channel].filter(memoryType => typeof memoryType === "string");
 }
 
 function suggestAction({ danger, familiarity, curiosity, type }) {
