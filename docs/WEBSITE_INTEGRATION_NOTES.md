@@ -4,22 +4,25 @@ These notes connect the public EchoPath Memory Layer Phase 1 wrappers to the web
 
 ## Current Website Status
 
-- Memory Layer page: live/fixed.
-- Live Demos Hub: live/fixed.
-- Memory Visualizer page: live/fixed.
-- Navigation menu: live/fixed.
+- Memory Layer page: target page is `https://echopathxr.com/echopath-memory-layer/`.
+- Repo-side Phase 1 demo hub and wrappers are ready for website linking.
+- Website-side deployment should use the absolute link map and checklist in [Memory Layer Website Phase 1 Readiness](WEBSITE_MEMORY_LAYER_PHASE_1_READINESS.md).
+- Public search results reviewed during this pass surfaced EchoPath XR and EchoPath Smooth pages, but did not reliably surface Memory Layer product/listing pages yet; treat Memory Layer navigation, indexing, and product-card visibility as website-side launch checks.
 
 ## Public Repo Link Targets
 
-After review, website pages should link to:
+Website pages should use absolute public URLs rather than copying local Markdown-relative paths:
 
-- [GitHub Pages demo hub](../docs/index.html)
-- [The Room Remembers wrapper](products/ROOM_REMEMBERS.md)
-- [Memory Visualizer / Debug Heatmap wrapper](products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md)
-- [Preset Pack Starter Edition wrapper](products/PRESET_PACK_STARTER_EDITION.md)
-- [Preset Pack public summary](../presets/starter/README.md)
-- [Memory Ledger Export wrapper](products/MEMORY_LEDGER_EXPORT.md)
-- [Public/private boundary](PUBLIC_PRIVATE_BOUNDARY.md)
+- GitHub Pages demo hub: `https://echopath-source.github.io/EchoPath-Memory-Layer-Public/`
+- The Room Remembers demo: `https://echopath-source.github.io/EchoPath-Memory-Layer-Public/room-remembers/`
+- Memory Visualizer demo: `https://echopath-source.github.io/EchoPath-Memory-Layer-Public/memory-visualizer/`
+- Phase 1 wrappers: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/PHASE_1_PRODUCT_WRAPPERS.md`
+- The Room Remembers wrapper: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/products/ROOM_REMEMBERS.md`
+- Memory Visualizer / Debug Heatmap wrapper: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md`
+- Preset Pack Starter Edition wrapper: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/products/PRESET_PACK_STARTER_EDITION.md`
+- Preset Pack public summary: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/presets/starter/README.md`
+- Memory Ledger Export wrapper: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/products/MEMORY_LEDGER_EXPORT.md`
+- Public/private boundary: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/PUBLIC_PRIVATE_BOUNDARY.md`
 
 ## Website Copy Guidance
 
