@@ -8,6 +8,7 @@ This public repo contains Phase 1 browser demos, public-safe docs, examples, sta
 
 Website: https://echopathxr.com  
 Product page: https://echopathxr.com/echopath-memory-layer/  
+Website readiness handoff: [`docs/WEBSITE_MEMORY_LAYER_PHASE_1_READINESS.md`](docs/WEBSITE_MEMORY_LAYER_PHASE_1_READINESS.md)  
 Contact: contact@echopathxr.com
 
 ---
