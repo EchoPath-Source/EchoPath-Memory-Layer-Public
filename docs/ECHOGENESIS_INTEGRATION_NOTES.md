@@ -4,6 +4,21 @@
 
 This document explains how the public EchoPath Memory Layer repo connects to the broader EchoGenesis / EchoNet / EchoChain ecosystem without exposing private runtime internals or protected research code.
 
+## Repo Sync Scope
+
+EchoPath Memory Layer Public is the public-safe Phase 1 product surface for spatial memory in games, XR, and simulations.
+
+It should remain focused on:
+
+- The Room Remembers;
+- Memory Visualizer / Debug Heatmap;
+- Preset Pack Starter Edition;
+- Memory Ledger Export baseline;
+- Memory Lite runtime abstraction;
+- public-safe examples and adapter scaffolds.
+
+This document is a handoff map only. It should not become the canonical EchoGenesis architecture spec, EchoChain sealing spec, EchoNet telemetry spec, or private runtime design document.
+
 ## Boundary
 
 Memory Lite is the public-safe runtime abstraction. It demonstrates the spatial memory product pattern without exposing:
@@ -65,6 +80,16 @@ EchoNet
    - Wraps demos and product copy for EchoPathXR.com.
    - Website hosts official downloads and product funnels.
 
+## Adapter Documentation Responsibilities
+
+| Adapter direction | Public repo responsibility | External owner / later owner |
+|---|---|---|
+| Memory Lite -> EchoNet ingest event | Define a public-safe normalized memory event sketch. | EchoNet owns telemetry ingestion, coherence mapping, and operational infrastructure. |
+| Memory Lite -> Memory Ledger Export | Define demo/session summary categories. | Future product builds may add richer export tooling. |
+| Memory Ledger Export -> EchoChain sealed event | Provide a candidate summary handoff shape only. | EchoGenesis / EchoChain own canonical sealed-event packet semantics. |
+| Memory Lite -> Unity/Godot preview adapter | Show scaffolds that map engine events into public API calls. | Paid/production plugin builds remain separate. |
+| Memory Lite -> Website demo wrapper | Document safe website copy and link targets. | EchoPathXR.com owns product funnel, downloads, and support. |
+
 ## Public Event Sketch
 
 A public-safe memory event can be summarized as:
@@ -86,6 +111,22 @@ A public-safe memory event can be summarized as:
 ```
 
 This is a public handoff sketch only. It is not the canonical EchoGenesis sealed event packet.
+
+## Do Not Duplicate
+
+Do not duplicate private or canonical future-stack specs into this public repo.
+
+Do not include:
+
+- private production runtime internals;
+- paid plugin source;
+- private coefficients or protected tuning rules;
+- EchoPath Neuro source;
+- Q-RRG kernel internals;
+- EchoGenesis canonical governance specs;
+- EchoChain canonical sealing implementation;
+- EchoNet telemetry internals;
+- SoCT scientific claims as product claims.
 
 ## Recommended Doc Links
 
