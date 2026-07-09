@@ -33,6 +33,34 @@ For Phase 1, this is documentation baseline rather than a production export serv
 - Replay summaries for demos and prototype sessions.
 - Website/product explanation of memory transparency.
 
+## Cross-Repo Handoff
+
+Memory Ledger Export is the public-safe bridge from Memory Lite sessions toward later audit and verification systems.
+
+```text
+Memory Lite session
+  -> Memory Ledger Export summary
+  -> EchoGenesis sealed-event candidate mapping
+  -> EchoChain / Reflection Ledger verification path later
+```
+
+EchoGenesis owns canonical sealed-event semantics. This public wrapper should only expose readable demo/session summaries, not private replay processors or future-stack internals.
+
+## Suggested Public Export Categories
+
+```json
+{
+  "session": {},
+  "anchors": [],
+  "events": [],
+  "channelTotals": {},
+  "triggeredActions": [],
+  "notes": {}
+}
+```
+
+This is a product-facing baseline, not a canonical production schema.
+
 ## Known Limitations
 
 - This public wrapper is not a complete production schema or private replay processor.
@@ -42,6 +70,8 @@ For Phase 1, this is documentation baseline rather than a production export serv
 ## Next Step / CTA
 
 Link this wrapper from the website after public review, then decide whether a small downloadable example ledger should be added in a later public-safe pass.
+
+See also [`../ECHOGENESIS_INTEGRATION_NOTES.md`](../ECHOGENESIS_INTEGRATION_NOTES.md).
 
 ## Boundary Note
 
