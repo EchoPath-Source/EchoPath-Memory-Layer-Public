@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document clarifies what the EchoPath Memory Layer public repo includes, what it intentionally excludes, and how Phase 1 should be described publicly.
+This document clarifies what the EchoPath Memory Layer public repo includes, what it intentionally excludes, which artifacts are public vs private, and how Phase 1 should be described publicly.
 
 ## Public Repo Includes
 
@@ -30,6 +30,35 @@ This repository does not include:
 - protected future-stack internals;
 - partner builds, partner details, or partner-specific optimization layers;
 - unvalidated research claims.
+
+## Artifact Exposure Map
+
+| Artifact | Public repo status | Notes |
+|---|---|---|
+| Browser demos | Public | Room Remembers, Memory Visualizer, demo hub, static assets. |
+| Memory Lite runtime | Public | Lightweight behavior reference only; not production runtime. |
+| Public API docs | Public | Stable observable API surface such as anchors, writes, queries, thresholds, and exports. |
+| Public product wrapper docs | Public | Product explanation, phase scope, and website-ready copy. |
+| Starter preset summaries | Public | Names, use cases, public-safe memory channels, and high-level behavior summaries. |
+| Preset private coefficients | Private | Do not expose protected weights, tuning constants, or proprietary internal mappings. |
+| Memory Ledger Export baseline | Public | Public-safe replay/event summary examples only. |
+| Demo smoke artifacts | Public-safe if generated from demo data | Must use synthetic/demo anchors, actions, and positions only. |
+| Production runtime internals | Private | No private scheduler, kernel, optimizer, adapter internals, or tuned runtime constants. |
+| EchoPath Neuro / CNN-SoCT code | Private/internal | Research implementation and raw model state stay out of this repo. |
+| Q-RRG internals | Private/internal | No protected tube/spine/kernel constants or private geometry logic. |
+| Partner integrations | Private | No partner details, scene data, custom tuning, or partner-specific optimization layers. |
+| Future-stack internals | Private/internal | EchoNet, EchoChain, Native, Cognition, and other future-stack details require explicit public-safe wrappers before exposure. |
+
+## Public Artifact Checklist
+
+Before adding or updating an artifact in this public repo, confirm:
+
+- the artifact is demo-only, documentation-only, or public API surface;
+- any runtime behavior is Memory Lite/public-safe behavior, not production internals;
+- data is synthetic, sanitized, or intentionally public;
+- no private constants, protected coefficients, or partner details are present;
+- no unvalidated scientific or research claims are presented as proof;
+- any future-stack reference is framed as a public-safe integration stub or roadmap item.
 
 ## Phase 1 Product Boundary
 
