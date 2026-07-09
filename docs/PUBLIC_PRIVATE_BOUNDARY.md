@@ -12,6 +12,7 @@ This repository includes:
 - public API and integration documentation;
 - product wrapper docs for Phase 1 surfaces;
 - public-safe starter preset summaries;
+- Memory Lite runtime abstraction;
 - Memory Ledger Export baseline documentation;
 - example adapter code for learning and prototyping;
 - Unity and Godot scaffolds as later-phase adapter references.
@@ -42,6 +43,7 @@ This repository does not include:
 | Starter preset summaries | Public | Names, use cases, public-safe memory channels, and high-level behavior summaries. |
 | Preset private coefficients | Private | Do not expose protected weights, tuning constants, or proprietary internal mappings. |
 | Memory Ledger Export baseline | Public | Public-safe replay/event summary examples only. |
+| EchoGenesis integration notes | Public-safe | Handoff map only; canonical sealed-event semantics live in EchoGenesis. |
 | Demo smoke artifacts | Public-safe if generated from demo data | Must use synthetic/demo anchors, actions, and positions only. |
 | Production runtime internals | Private | No private scheduler, kernel, optimizer, adapter internals, or tuned runtime constants. |
 | EchoPath Neuro / CNN-SoCT code | Private/internal | Research implementation and raw model state stay out of this repo. |
@@ -65,10 +67,28 @@ Before adding or updating an artifact in this public repo, confirm:
 Phase 1 is centered on public product wrappers:
 
 ```text
-browser demos + product docs + starter preset summaries + ledger export baseline
+browser demos + product docs + starter preset summaries + ledger export baseline + Memory Lite
 ```
 
 Phase 1 is not a release of private runtime internals, paid plugin source, EchoPath Neuro, or a broader future-stack product.
+
+## Cross-Repo Boundary
+
+```text
+Memory Layer Public
+  -> public-safe demos, docs, Memory Lite, preset summaries, adapter scaffolds, and ledger-style summaries
+
+EchoGenesis
+  -> canonical ecosystem mapping, sealed-event semantics, governance language, and cross-construct architecture
+
+EchoNet
+  -> future telemetry/coherence ingest layer for normalized memory events
+
+EchoChain / Reflection Ledger
+  -> future verification, audit, and sealed-session layer
+```
+
+This repo may document public handoff shapes. It should not define canonical EchoGenesis governance semantics or expose protected future-stack internals.
 
 ## Unity / Godot Boundary
 
@@ -85,7 +105,7 @@ Private/product channels = production runtime + paid plugins + partner builds
 ## Recommended Public Wording
 
 ```text
-The public repository includes browser demos, documentation, starter preset summaries, and product wrappers.
+The public repository includes browser demos, documentation, starter preset summaries, Memory Lite, and product wrappers.
 The production runtime, paid plugin source, private research lanes, and partner builds are distributed separately through EchoPath XR channels.
 ```
 
