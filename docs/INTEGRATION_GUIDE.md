@@ -136,6 +136,44 @@ Official packages may include:
 
 ---
 
+## Cross-Repo Handoff
+
+Public integrations should hand off summaries and normalized events, not private internals.
+
+```text
+Memory Lite / public examples
+  -> public-safe memory events
+  -> threshold responses
+  -> preset summaries
+  -> ledger-style session summaries
+
+EchoGenesis
+  -> canonical ecosystem map
+  -> sealed-event semantics
+  -> cross-construct architecture
+
+EchoNet / EchoChain / Reflection Ledger
+  -> future ingest, verification, audit, or telemetry surfaces
+```
+
+See [`ECHOGENESIS_INTEGRATION_NOTES.md`](ECHOGENESIS_INTEGRATION_NOTES.md) for the public-safe bridge map.
+
+---
+
+## Adapter Handoff Targets
+
+Track these adapter directions as public-safe scaffolds:
+
+- Memory Lite -> EchoNet ingest event
+- Memory Lite -> Memory Ledger Export
+- Memory Ledger Export -> EchoChain sealed event candidate
+- Memory Lite -> Unity/Godot preview adapter
+- Memory Lite -> website demo wrapper
+
+These are handoff patterns only. They should not expose private runtime internals, tuning constants, protected research code, or partner-specific logic.
+
+---
+
 ## Boundary
 
 Do not treat the public examples as the full production engine.
