@@ -4,7 +4,7 @@ This page describes public-safe limitations for EchoPath Memory Layer Phase 1.
 
 ## Phase 1 Scope
 
-Phase 1 is a public product-wrapper layer around browser demos, starter preset summaries, and a Memory Ledger Export baseline. It is designed to communicate value without exposing private runtime internals.
+Phase 1 is a public product-wrapper layer around browser demos, starter preset summaries, Memory Lite, and a Memory Ledger Export baseline. It is designed to communicate value without exposing private runtime internals.
 
 ## Demo Limitations
 
@@ -13,6 +13,12 @@ Phase 1 is a public product-wrapper layer around browser demos, starter preset s
 - Heatmap output is a public visualization aid, not a full engine debugger.
 - Memory channels are limited to a small set of understandable examples.
 - Thresholds and values shown in demos are illustrative and should not be treated as production tuning guidance.
+
+## Memory Lite Limitations
+
+- Memory Lite is a public-safe runtime abstraction for demos and examples.
+- It demonstrates the spatial memory pattern, but it is not the private production runtime.
+- It should not be treated as the paid plugin source, partner runtime, optimized kernel, or complete future-stack implementation.
 
 ## Preset Summary Limitations
 
@@ -25,10 +31,26 @@ Phase 1 is a public product-wrapper layer around browser demos, starter preset s
 - The public Memory Ledger Export wrapper describes a baseline session/export shape.
 - It does not include private replay processors, partner analytics, server infrastructure, or protected schema evolution details.
 - Any example fields should be treated as public interoperability guidance, not a complete production contract.
+- EchoGenesis / EchoChain own canonical sealed-event semantics if a future session summary becomes a sealed-event candidate.
 
 ## Engine Adapter Limitations
 
 Unity and Godot scaffolds are later-phase adapter references. They are not the current Phase 1 product release and should not be represented as production plugin packages.
+
+## Cross-Repo Handoff Limitations
+
+Public handoffs may include normalized memory events, preset summaries, threshold responses, website demo summaries, and ledger-style session summaries.
+
+Public handoffs must not include:
+
+- private production runtime internals;
+- paid plugin source;
+- private coefficients;
+- protected tuning rules;
+- EchoPath Neuro source;
+- Q-RRG kernel internals;
+- partner details;
+- unvalidated SoCT or scientific claims presented as product claims.
 
 ## Research Boundary
 
