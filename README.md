@@ -83,6 +83,16 @@ Memory Lite is intentionally lightweight. It makes the public repo usable withou
 
 ---
 
+## EchoGenesis / Ecosystem Handoff
+
+Memory Layer Public is the public-safe Phase 1 product surface. It can emit public-safe memory events, preset summaries, threshold responses, and ledger-style session summaries.
+
+EchoGenesis owns canonical ecosystem mapping, sealed-event semantics, governance language, and cross-construct architecture. EchoChain / Reflection Ledger can later verify sealed memory sessions. EchoNet can later ingest normalized memory events for telemetry and coherence mapping.
+
+See [`docs/ECHOGENESIS_INTEGRATION_NOTES.md`](docs/ECHOGENESIS_INTEGRATION_NOTES.md) for the public-safe handoff map.
+
+---
+
 ## Phase 1 Product Surfaces
 
 | Surface | What it is | Wrapper |
@@ -183,6 +193,7 @@ README.md
   -> docs/products/MEMORY_VISUALIZER_DEBUG_HEATMAP.md
   -> docs/products/PRESET_PACK_STARTER_EDITION.md
   -> docs/products/MEMORY_LEDGER_EXPORT.md
+  -> docs/ECHOGENESIS_INTEGRATION_NOTES.md
   -> docs/PUBLIC_PRIVATE_BOUNDARY.md
   -> docs/START_HERE.md
   -> docs/QUICK_START.md
@@ -207,6 +218,7 @@ docs/
   PHASE_1_PRODUCT_WRAPPERS.md
   KNOWN_LIMITATIONS.md
   PUBLIC_PRIVATE_BOUNDARY.md
+  ECHOGENESIS_INTEGRATION_NOTES.md
   WEBSITE_INTEGRATION_NOTES.md
   products/
     ROOM_REMEMBERS.md
