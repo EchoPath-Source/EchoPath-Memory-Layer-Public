@@ -6,7 +6,9 @@ This document defines the public integration contract for EchoPath Memory Layer 
 
 The full production runtime may differ internally. The public API contract exists so developers can understand the intended integration pattern without exposing private runtime internals, protected research models, protected future-stack internals, or paid plugin source.
 
-The public repo now includes a lightweight implementation of this contract under [`src/memory-lite/`](../src/memory-lite/) for demos and examples. See [`MEMORY_LITE_RUNTIME.md`](MEMORY_LITE_RUNTIME.md).
+The public repo includes a lightweight implementation of this contract under [`src/memory-lite/`](../src/memory-lite/) for demos and examples. See [`MEMORY_LITE_RUNTIME.md`](MEMORY_LITE_RUNTIME.md).
+
+Memory Lite is the public-safe runtime abstraction. It demonstrates the spatial memory product pattern without exposing private production runtime internals, private tuning constants, paid plugin source, partner details, or unvalidated research claims.
 
 ---
 
@@ -260,6 +262,45 @@ For public examples, save/load is local and developer-controlled. Production plu
 
 ---
 
+## Public-Safe Integration Event
+
+Adapters may map public API calls into normalized event summaries for demos, exports, or future handoff stubs.
+
+```json
+{
+  "schema": "echopath.memory_event.public",
+  "version": "0.1.0",
+  "anchorId": "closet",
+  "eventType": "hiding",
+  "strength": 0.18,
+  "source": "player",
+  "tags": ["demo", "stealth"],
+  "metadata": {
+    "demo": "room_remembers"
+  }
+}
+```
+
+This is not a canonical EchoGenesis sealed event packet. EchoGenesis owns sealed-event semantics and cross-construct architecture.
+
+---
+
+## Cross-Repo Handoff
+
+The API may support public-safe handoff toward:
+
+- Memory Ledger Export baseline summaries;
+- website demo wrappers;
+- Unity/Godot preview adapters;
+- future EchoNet ingest-event examples;
+- future EchoChain / Reflection Ledger sealed-session examples.
+
+These handoffs should pass memory events, preset summaries, threshold responses, and ledger-style session summaries. They should not pass private runtime internals, tuning constants, paid plugin source, partner details, or protected research implementation.
+
+See [`ECHOGENESIS_INTEGRATION_NOTES.md`](ECHOGENESIS_INTEGRATION_NOTES.md).
+
+---
+
 ## API Stability
 
 The current public API contract is draft v0.2. During the v0.x examples phase:
@@ -286,6 +327,7 @@ Public API:
 - trigger contract
 - save/load shape
 - public-safe Memory Lite implementation
+- public-safe handoff summaries
 
 Private implementation:
 
@@ -309,4 +351,5 @@ docs/MEMORY_LITE_RUNTIME.md
 docs/RECIPES.md
 docs/ADAPTER_CONTRACT.md
 docs/VERSIONING.md
+docs/ECHOGENESIS_INTEGRATION_NOTES.md
 ```
