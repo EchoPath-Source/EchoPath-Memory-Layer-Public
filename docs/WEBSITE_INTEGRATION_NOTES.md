@@ -49,6 +49,18 @@ Memory Layer public demos can produce readable session summaries and memory even
 
 Do not use website copy to imply that EchoChain, EchoNet, or Reflection Ledger integrations are production-ready from this public repo.
 
+## Adapter Link Guidance
+
+When describing integrations from the website, keep adapter wording as scaffolding rather than production availability:
+
+| Adapter path | Website-safe phrase |
+|---|---|
+| Memory Lite -> EchoNet ingest event | Future telemetry handoff concept. |
+| Memory Lite -> Memory Ledger Export | Readable demo/session export baseline. |
+| Memory Ledger Export -> EchoChain sealed event | Future sealed-session verification path. |
+| Memory Lite -> Unity/Godot preview adapter | Preview adapter scaffold, not final paid plugin. |
+| Memory Lite -> Website demo wrapper | Public demo wrapper and product explanation layer. |
+
 ## Product Polish Order
 
 1. Stabilize public wrappers in this repo.
