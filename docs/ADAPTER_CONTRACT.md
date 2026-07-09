@@ -145,6 +145,22 @@ An adapter is minimally compliant when it can:
 
 ---
 
+## Public-Safe Handoff Targets
+
+The public adapter contract should support these handoff patterns without exposing private runtime internals:
+
+| Adapter direction | Public-safe payload | Notes |
+|---|---|---|
+| Memory Lite -> EchoNet ingest event | normalized memory event summary | Future-facing telemetry bridge; no EchoNet internals exposed. |
+| Memory Lite -> Memory Ledger Export | session metadata, anchors, event summaries, channel totals, triggered actions | Public demo/QA/replay baseline. |
+| Memory Ledger Export -> EchoChain sealed event candidate | ledger-style session summary | EchoGenesis / EchoChain own canonical sealed-event semantics. |
+| Memory Lite -> Unity/Godot preview adapter | engine events mapped to `writeEngram`, query, trigger, save/load calls | Preview scaffold only, not paid plugin source. |
+| Memory Lite -> website demo wrapper | safe demo actions and product-facing readouts | Website hosts product funnel and official downloads. |
+
+See [`ECHOGENESIS_INTEGRATION_NOTES.md`](ECHOGENESIS_INTEGRATION_NOTES.md) for the cross-repo bridge map.
+
+---
+
 ## Public / Private Boundary
 
 Public adapters may expose the Memory Lite contract.
