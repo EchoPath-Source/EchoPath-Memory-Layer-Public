@@ -43,6 +43,20 @@ The website product page can link to this public summary after review.
 - Website copy and product packaging for the starter edition.
 - Prototype planning before private runtime or paid plugin integration.
 
+## Integration Role
+
+Preset summaries should remain product-facing handoff objects.
+
+```text
+Preset Pack public summary
+  -> Memory Lite demo anchors
+  -> threshold response examples
+  -> Memory Ledger Export summaries
+  -> future Unity/Godot preview adapter examples
+```
+
+The public preset summary may describe behavior themes, memory channels, action labels, and visual style hints. It should not include private coefficients, protected tuning rules, production runtime mappings, partner details, or unvalidated research claims.
+
 ## Known Limitations
 
 - The public preset summary intentionally omits private coefficients, raw runtime internals, protected tuning rules, and research details.
@@ -52,6 +66,8 @@ The website product page can link to this public summary after review.
 ## Next Step / CTA
 
 After reviewing the starter presets, read the [Memory Ledger Export wrapper](MEMORY_LEDGER_EXPORT.md) to understand how sessions can be summarized for replay, QA, and design review.
+
+See also [`../ECHOGENESIS_INTEGRATION_NOTES.md`](../ECHOGENESIS_INTEGRATION_NOTES.md) for cross-repo handoff notes.
 
 ## Boundary Note
 
