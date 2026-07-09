@@ -22,6 +22,7 @@ Website pages should use absolute public URLs rather than copying local Markdown
 - Preset Pack Starter Edition wrapper: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/products/PRESET_PACK_STARTER_EDITION.md`
 - Preset Pack public summary: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/presets/starter/README.md`
 - Memory Ledger Export wrapper: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/products/MEMORY_LEDGER_EXPORT.md`
+- EchoGenesis integration notes: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/ECHOGENESIS_INTEGRATION_NOTES.md`
 - Public/private boundary: `https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/blob/main/docs/PUBLIC_PRIVATE_BOUNDARY.md`
 
 ## Website Copy Guidance
@@ -37,6 +38,16 @@ Export a readable Memory Ledger baseline.
 ```
 
 Avoid implying that the public repo includes production runtime internals, paid plugin source, protected research code, or partner builds.
+
+## Cross-Repo Language Guidance
+
+If the website references broader ecosystem fit, keep it short and public-safe:
+
+```text
+Memory Layer public demos can produce readable session summaries and memory event patterns. Deeper sealed-event, telemetry, and governance integrations are handled by separate EchoGenesis / EchoNet / EchoChain architecture tracks.
+```
+
+Do not use website copy to imply that EchoChain, EchoNet, or Reflection Ledger integrations are production-ready from this public repo.
 
 ## Product Polish Order
 
