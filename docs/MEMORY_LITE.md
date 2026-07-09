@@ -65,6 +65,21 @@ The suggested action is intentionally basic. It is a public preview behavior hin
 
 Memory Lite does not prescribe cloud persistence, account sync, migrations, or production storage policy.
 
+## Ecosystem handoff role
+
+Memory Lite is the public-safe runtime abstraction. It can emit or support:
+
+- public-safe memory events;
+- threshold response summaries;
+- starter preset summaries;
+- local save/load snapshots;
+- Memory Ledger Export-style session summaries;
+- preview adapter calls for Unity, Godot, and website demos.
+
+Future ecosystem integrations should hand off these summaries to EchoGenesis, EchoNet, EchoChain, or Reflection Ledger without exposing private implementation details.
+
+See [`ECHOGENESIS_INTEGRATION_NOTES.md`](ECHOGENESIS_INTEGRATION_NOTES.md).
+
 ## What is intentionally not included
 
 Memory Lite does **not** include:
