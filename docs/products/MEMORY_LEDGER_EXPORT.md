@@ -9,12 +9,14 @@ Memory Ledger Export is a public baseline for recording what memory events occur
 - Memory behavior can be summarized after a session.
 - Designers and QA can review what happened, where it happened, and which public-safe actions were triggered.
 - Replay/export language can support trust without exposing private runtime internals.
+- Public Memory Layer demos can produce ledger-style summaries before any future EchoChain or Reflection Ledger integration exists.
 
 ## What Is Included
 
 - A public product wrapper for the ledger/export concept.
 - Suggested high-level export categories: session metadata, anchors, event summaries, channel totals, and public-safe triggered actions.
 - Guidance for keeping exports understandable and boundary-safe.
+- A public-safe bridge concept for future sealed-session handoff.
 
 ## How To Try It
 
@@ -32,6 +34,7 @@ For Phase 1, this is documentation baseline rather than a production export serv
 - Designer review of repeated behavior patterns.
 - Replay summaries for demos and prototype sessions.
 - Website/product explanation of memory transparency.
+- Future handoff sketch for EchoGenesis / EchoChain / Reflection Ledger, using summaries only.
 
 ## Cross-Repo Handoff
 
@@ -66,6 +69,7 @@ This is a product-facing baseline, not a canonical production schema.
 - This public wrapper is not a complete production schema or private replay processor.
 - It does not include partner analytics, server-side processing, private runtime traces, protected schema evolution, or tuning internals.
 - Example categories should remain high-level and public-safe.
+- It is not a canonical EchoGenesis sealed-event packet.
 
 ## Next Step / CTA
 
@@ -75,4 +79,4 @@ See also [`../ECHOGENESIS_INTEGRATION_NOTES.md`](../ECHOGENESIS_INTEGRATION_NOTE
 
 ## Boundary Note
 
-No private runtime, protected research internals, EchoPath Neuro implementation, partner details, private replay processors, or protected future-stack internals are included.
+No private runtime, protected research internals, EchoPath Neuro implementation, partner details, private replay processors, Q-RRG kernel internals, protected future-stack internals, or unvalidated scientific claims are included.
