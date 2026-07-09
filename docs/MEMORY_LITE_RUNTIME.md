@@ -152,6 +152,39 @@ applyPresetSummary(memory, presetSummary, {
 
 This uses public-safe action themes and visual style hints. It does not expose private preset coefficients or production implementation details. See [`../examples/memory-lite-preset-summary.js`](../examples/memory-lite-preset-summary.js) for a runnable preset-summary example.
 
+## Public-safe event shape
+
+Memory Lite can be wrapped by adapters that emit public-safe event summaries:
+
+```json
+{
+  "schema": "echopath.memory_event.public",
+  "version": "0.1.0",
+  "anchorId": "closet_01",
+  "eventType": "hiding",
+  "strength": 0.35,
+  "source": "player",
+  "tags": ["demo", "stealth"],
+  "metadata": {
+    "demo": "room_remembers"
+  }
+}
+```
+
+This shape is for demo/export/integration scaffolds only. It is not the canonical EchoGenesis sealed-event packet.
+
+## Cross-repo handoff
+
+Memory Lite can support safe handoff toward:
+
+- Memory Ledger Export session summaries;
+- website demo wrappers;
+- Unity/Godot preview adapters;
+- future EchoNet ingest event examples;
+- future EchoChain / Reflection Ledger sealed-session examples.
+
+EchoGenesis owns canonical ecosystem mapping and sealed-event semantics. See [`ECHOGENESIS_INTEGRATION_NOTES.md`](ECHOGENESIS_INTEGRATION_NOTES.md).
+
 ## Boundary note
 
 Memory Lite is a public preview abstraction. It makes the public repo more usable for learning, demos, and wrapper evaluation, but it is not the full production runtime distributed by EchoPath XR.
