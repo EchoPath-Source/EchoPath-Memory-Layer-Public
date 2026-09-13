@@ -12,11 +12,13 @@ const anchors = [
   { id: 'bedroom', label: 'Bedroom', x: 710, y: 165, memory: {}, decay: 0.020 }
 ];
 
+// Living Spatial Systems semantics: retained memory/lineage, active interaction,
+// semantic danger, and semantic safe state.
 const channels = {
-  hiding: [70, 231, 255],
-  sound: [0, 229, 200],
-  danger: [255, 77, 125],
-  safe: [119, 255, 176]
+  hiding: [182, 149, 255],
+  sound: [41, 255, 210],
+  danger: [255, 124, 124],
+  safe: [128, 232, 178]
 };
 
 function log(msg) {
@@ -50,7 +52,7 @@ function drawHeat(anchor, type, value) {
 }
 
 function drawGrid() {
-  ctx.strokeStyle = 'rgba(255,255,255,0.055)';
+  ctx.strokeStyle = 'rgba(169,186,199,0.055)';
   ctx.lineWidth = 1;
   for (let x = 0; x < canvas.width; x += 36) {
     ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
@@ -62,7 +64,7 @@ function drawGrid() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#07101d';
+  ctx.fillStyle = '#071019';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   drawGrid();
 
@@ -76,17 +78,17 @@ function draw() {
     const v = a.memory[selected] || 0;
     ctx.beginPath();
     ctx.arc(a.x, a.y, 28 + v * 18, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${0.10 + v * 0.20})`;
+    ctx.fillStyle = `rgba(244,248,251,${0.10 + v * 0.20})`;
     ctx.fill();
-    ctx.strokeStyle = v > 0.45 ? 'rgba(70,231,255,.95)' : 'rgba(255,255,255,.32)';
+    ctx.strokeStyle = v > 0.45 ? 'rgba(182,149,255,.95)' : 'rgba(169,186,199,.32)';
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    ctx.fillStyle = '#eef7ff';
+    ctx.fillStyle = '#f4f8fb';
     ctx.font = '800 16px Inter, system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(a.label, a.x, a.y + 5);
-    ctx.fillStyle = '#9fb1c8';
+    ctx.fillStyle = '#a9bac7';
     ctx.font = '700 12px Inter, system-ui, sans-serif';
     ctx.fillText(`${selected}: ${v.toFixed(2)}`, a.x, a.y + 24);
   }
