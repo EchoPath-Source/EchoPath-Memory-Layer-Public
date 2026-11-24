@@ -1,0 +1,45 @@
+name: Public Memory Lab Validation
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "tests/**"
+      - "src/memory-lite/**"
+      - "presets/**"
+      - "scripts/**"
+      - "package.json"
+      - ".github/workflows/public-memory-lab.yml"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "tests/**"
+      - "src/memory-lite/**"
+      - "presets/**"
+      - "scripts/**"
+      - "package.json"
+      - ".github/workflows/public-memory-lab.yml"
+
+jobs:
+  validate-public-lab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate ten public preset summaries
+        run: npm run validate:presets
+      - name: Run Memory Lite and public scenario tests
+        run: npm test
+      - name: Validate module syntax and required demo DOM hooks (static only)
+        run: npm run smoke:lab
+      - name: Generate synthetic scenario evidence
+        run: npm run evidence:lab
+      - name: Upload synthetic evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-memory-lab-v2-evidence
+          path: outputs/public-memory-lab-evidence.json
