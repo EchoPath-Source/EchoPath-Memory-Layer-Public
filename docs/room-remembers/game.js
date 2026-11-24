@@ -1,293 +1,212 @@
-class DemoMemoryLayer {
-  constructor() {
-    this.anchors = new Map();
-    this.rules = [];
-    this.time = 0;
-    this.listeners = [];
+import { ROOM_PROFILES, createRoomLab, runRoomSequence } from "../lab/scenarios.js";
+
+const $ = id => document.getElementById(id);
+const STORAGE = "echopath.public_memory_lab.room.v2";
+const node = {
+  scenario: $("scenario"), description: $("scenarioDescription"),
+  meters: $("meters"), zoneTotals: $("zoneTotals"), actions: $("actionOutcomes"),
+  worldState: $("worldState"), status: $("labStatus"), npc: $("npc"), log: $("log"),
+  door: $("door"),
+};
+let lab, profile = "room";
+let host = { npcTarget: null, doorOpen: false, atmosphere: false, avoidHall: false };
+let lines = [];
+
+function message(text) {
+  lines.push(text);
+  lines = lines.slice(-35);
+  node.log.textContent = lines.join("\n") + "\n";
+  node.log.scrollTop = node.log.scrollHeight;
+}
+function status(text) { node.status.textContent = text; }
+function format(value) { return Number(value).toFixed(2); }
+
+function onHostAction(trigger) {
+  if (trigger.actionKey === "demo.atmosphere") host.atmosphere = true;
+  if (trigger.actionKey === "demo.investigate") host.npcTarget = "closet";
+  if (trigger.actionKey === "demo.door_glow") host.atmosphere = true;
+  if (trigger.actionKey === "demo.door_open") host.doorOpen = true;
+  if (trigger.actionKey === "demo.prefer_exit") host.npcTarget = "exit";
+  if (trigger.actionKey === "demo.avoid_hall") host.avoidHall = true;
+  message(`[Host demo] ${trigger.actionKey}: completed visual state update at t=${format(trigger.time)}s`);
+}
+
+function init(next = "room") {
+  profile = next;
+  host = { npcTarget: null, doorOpen: false, atmosphere: false, avoidHall: false };
+  lab = createRoomLab(profile, onHostAction);
+  lines = [];
+  node.scenario.value = profile;
+  node.description.textContent = ROOM_PROFILES[profile].description;
+  message(`[Public Memory Lab] ${ROOM_PROFILES[profile].title} ready. Synthetic data only.`);
+  status("Ready. Use the scripted run or write events yourself.");
+  render();
+}
+
+function positionNpc(targetId) {
+  if (!targetId) {
+    node.npc.style.left = "50%";
+    node.npc.style.top = "78%";
+    return;
   }
+  const target = $(targetId);
+  const world = $("world");
+  if (!target || !world) return;
+  const bounds = target.getBoundingClientRect();
+  const base = world.getBoundingClientRect();
+  node.npc.style.left = `${((bounds.left + bounds.width / 2 - base.left) / base.width) * 100}%`;
+  node.npc.style.top = `${((bounds.top + bounds.height / 2 - base.top) / base.height) * 100}%`;
+}
 
-  addAnchor(anchor) {
-    this.anchors.set(anchor.id, {
-      position: { x: 0, y: 0, z: 0 },
-      radius: 1,
-      decayRate: 0.022,
-      reinforcementMultiplier: 1,
-      memory: {},
-      eventHistory: [],
-      tags: [],
-      metadata: {},
-      ...anchor,
-    });
-  }
+function createReadout(label, value) {
+  const element = document.createElement("div");
+  element.className = "memory-readout";
+  const name = document.createElement("span");
+  name.textContent = label;
+  const val = document.createElement("strong");
+  val.textContent = value;
+  element.append(name, val);
+  return element;
+}
 
-  addRule(rule) {
-    this.rules.push({ cooldownSeconds: 8, lastFiredAt: -Infinity, ...rule });
-  }
-
-  writeEvent(event) {
-    const anchor = this.anchors.get(event.targetAnchorId);
-    if (!anchor) return null;
-
-    const type = event.type ?? "custom";
-    const strength = event.strength ?? 0.1;
-    const current = anchor.memory[type] ?? 0;
-    const repeatCount = anchor.eventHistory.filter((evt) => evt.type === type).length;
-    const reinforcement = 1 + repeatCount * 0.04;
-
-    anchor.memory[type] = Math.min(1, current + strength * anchor.reinforcementMultiplier * reinforcement);
-    anchor.eventHistory.push({
-      id: `evt_${Math.random().toString(36).slice(2, 9)}`,
-      timestamp: this.time,
-      type,
-      source: event.source ?? "demo",
-      targetAnchorId: anchor.id,
-      strength,
-      tags: [...(event.tags ?? [])],
-    });
-    anchor.eventHistory = anchor.eventHistory.slice(-24);
-    this.checkRules();
-    return anchor;
-  }
-
-  writeEngram({ anchorId = null, position = null, eventType = "custom", strength = 0.1, source = "demo", tags = [], radius = Infinity } = {}) {
-    let targetAnchorId = anchorId;
-    if (!targetAnchorId && position) {
-      const nearest = this.getNearestAnchor(position, radius);
-      targetAnchorId = nearest?.id;
+function render() {
+  node.meters.replaceChildren();
+  for (const anchor of lab.anchors.values()) {
+    for (const [channel, value] of Object.entries(anchor.memory)) {
+      const item = document.createElement("div");
+      item.className = "meter";
+      const label = document.createElement("div");
+      label.className = "meter-label";
+      const name = document.createElement("span");
+      name.textContent = `${anchor.id}.${channel}`;
+      const v = document.createElement("span");
+      v.textContent = format(value);
+      label.append(name, v);
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      const fill = document.createElement("div");
+      fill.className = "fill";
+      fill.style.width = `${Math.round(Math.min(1, value) * 100)}%`;
+      bar.append(fill);
+      item.append(label, bar);
+      node.meters.append(item);
     }
-    if (!targetAnchorId) return null;
-    return this.writeEvent({
-      type: eventType,
-      targetAnchorId,
-      position,
-      strength,
-      source,
-      tags,
-    });
+    const peak = Math.max(0, ...Object.values(anchor.memory));
+    $(anchor.id)?.style.setProperty("--pulse", Math.min(0.9, peak).toFixed(2));
   }
 
-  getNearestAnchor(position, radius = Infinity) {
-    let best = null;
-    let bestDistance = Infinity;
-    for (const anchor of this.anchors.values()) {
-      const d = this.distance(position, anchor.position);
-      if (d <= radius && d < bestDistance) {
-        best = anchor;
-        bestDistance = d;
-      }
+  node.zoneTotals.replaceChildren();
+  for (const zone of lab.zones.values()) {
+    const totals = lab.getZoneTotals(zone.id);
+    const value = Object.entries(totals).filter(([, v]) => v > 0.001)
+      .map(([key, v]) => `${key} ${format(v)}`).join(" · ") || "No retained memory";
+    node.zoneTotals.append(createReadout(zone.label, value));
+  }
+
+  node.actions.replaceChildren();
+  const actions = lab.actions.slice(-5).reverse();
+  if (!actions.length) node.actions.append(createReadout("Action outcomes", "None yet"));
+  for (const action of actions) {
+    node.actions.append(createReadout(action.actionKey,
+      `${action.status}${action.reason ? ` (${action.reason})` : ""}`));
+  }
+  node.door.classList.toggle("door-open", host.doorOpen);
+  node.door.textContent = host.doorOpen ? "Door OPEN" : "Living Door";
+  node.npc.classList.toggle("alert", host.npcTarget !== null || host.avoidHall);
+  node.worldState.textContent = `t=${format(lab.time)}s · NPC: ${host.npcTarget ?? "observing"} · Door: ${host.doorOpen ? "open" : "closed"} · Atmosphere: ${host.atmosphere ? "shifted" : "normal"}${host.avoidHall ? " · Avoiding hallway" : ""}`;
+  positionNpc(host.npcTarget);
+}
+
+function write(anchorId, channel, strength) {
+  try {
+    const result = lab.write(anchorId, channel, strength);
+    lab.advance(0.2); // Explicit simulation step, not an unseen wall-clock timer.
+    message(`[Event] ${anchorId}.${channel} += ${format(strength)} -> ${format(result.value)}`);
+    if (result.triggers.length) {
+      message(`[Threshold] ${result.triggers.map(x => x.actionKey).join(", ")}`);
     }
-    return best;
+    render();
+  } catch (error) { status(`Input rejected: ${error.message}`); }
+}
+
+function save() {
+  const data = { kind: "echopath.public_memory_demo", version: "0.1.0",
+    profile, lab: lab.snapshot(), host: { ...host } };
+  try {
+    localStorage.setItem(STORAGE, JSON.stringify(data));
+    status("Synthetic browser-only snapshot saved on this device.");
+    message("[Snapshot] Saved locally; not uploaded to a server.");
+  } catch {
+    status("Local storage unavailable. Use Export summary instead.");
   }
+}
 
-  getNearbyAnchors(position, radius) {
-    return [...this.anchors.values()].filter((anchor) => this.distance(position, anchor.position) <= radius);
-  }
-
-  getLocalMemoryGradient({ position, radius = 5, type = null }) {
-    const totals = {};
-    const nearby = this.getNearbyAnchors(position, radius);
-    let strongestAnchor = null;
-    let strongestScore = 0;
-    let weighted = { x: 0, y: 0, z: 0 };
-    let totalWeight = 0;
-
-    for (const anchor of nearby) {
-      const d = this.distance(position, anchor.position);
-      const proximity = Math.max(0, 1 - d / radius);
-      const memoryEntries = type ? [[type, anchor.memory[type] ?? 0]] : Object.entries(anchor.memory);
-      for (const [memoryType, value] of memoryEntries) {
-        const score = value * proximity;
-        totals[memoryType] = (totals[memoryType] ?? 0) + score;
-        if (score > strongestScore) {
-          strongestScore = score;
-          strongestAnchor = anchor;
-        }
-        weighted.x += anchor.position.x * score;
-        weighted.y += anchor.position.y * score;
-        weighted.z += (anchor.position.z ?? 0) * score;
-        totalWeight += score;
-      }
-    }
-
-    const danger = Math.min(1, totals.danger ?? totals.combat ?? 0);
-    const familiarity = Math.min(1, (totals.presence ?? 0) + (totals.route ?? 0) + (totals.safe ?? 0));
-    const curiosity = Math.min(1, (totals.hiding ?? 0) + (totals.sound ?? 0) + strongestScore * 0.5);
-    const gradientTarget = totalWeight > 0
-      ? { x: weighted.x / totalWeight, y: weighted.y / totalWeight, z: weighted.z / totalWeight }
-      : null;
-
-    return {
-      totals,
-      danger,
-      familiarity,
-      curiosity,
-      strongestAnchorId: strongestAnchor?.id ?? null,
-      strongestAnchorLabel: strongestAnchor?.label ?? null,
-      strongestScore: Math.min(1, strongestScore),
-      gradientTarget,
-      suggestedAction: this.suggestAction({ danger, familiarity, curiosity, strongestAnchor }),
+function restore() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE) ?? "null");
+    if (!data || data.kind !== "echopath.public_memory_demo" ||
+        data.version !== "0.1.0" || !Object.hasOwn(ROOM_PROFILES, data.profile) ||
+        !data.host || typeof data.host !== "object") throw new Error("No compatible saved session");
+    const next = createRoomLab(data.profile, onHostAction);
+    next.restore(data.lab);
+    // No mutation of current visible state until full candidate validation.
+    profile = data.profile;
+    lab = next;
+    host = {
+      npcTarget: ["closet", "exit", null].includes(data.host.npcTarget) ? data.host.npcTarget : null,
+      doorOpen: data.host.doorOpen === true, atmosphere: data.host.atmosphere === true,
+      avoidHall: data.host.avoidHall === true,
     };
-  }
-
-  suggestAction({ danger, familiarity, curiosity, strongestAnchor }) {
-    if (!strongestAnchor) return "patrol";
-    if (danger >= 0.65) return "avoid / raise alert";
-    if (curiosity >= 0.55) return "investigate memory hotspot";
-    if (familiarity >= 0.55) return "predict repeated route";
-    return "patrol";
-  }
-
-  step(deltaTime) {
-    this.time += deltaTime;
-    for (const anchor of this.anchors.values()) {
-      for (const type of Object.keys(anchor.memory)) {
-        anchor.memory[type] *= Math.exp(-anchor.decayRate * deltaTime);
-        if (anchor.memory[type] < 0.001) delete anchor.memory[type];
-      }
-    }
-    this.checkRules();
-  }
-
-  getMemory(anchorId, type) {
-    return this.anchors.get(anchorId)?.memory[type] ?? 0;
-  }
-
-  onTrigger(callback) {
-    this.listeners.push(callback);
-  }
-
-  checkRules() {
-    for (const rule of this.rules) {
-      const value = this.getMemory(rule.anchorId, rule.memoryType);
-      const canFire = this.time - rule.lastFiredAt >= rule.cooldownSeconds;
-      if (value >= rule.threshold && canFire) {
-        rule.lastFiredAt = this.time;
-        this.listeners.forEach((cb) => cb({ ...rule, value, time: this.time }));
-      }
-    }
-  }
-
-  distance(a, b) {
-    const dx = (a.x ?? 0) - (b.x ?? 0);
-    const dy = (a.y ?? 0) - (b.y ?? 0);
-    const dz = (a.z ?? 0) - (b.z ?? 0);
-    return Math.sqrt(dx * dx + dy * dy + dz * dz);
-  }
+    node.scenario.value = profile;
+    node.description.textContent = ROOM_PROFILES[profile].description;
+    message("[Snapshot] Restored synthetic memory and host state.");
+    status("Restored. Once/cooldown state and zone relationships retained.");
+    render();
+  } catch (error) { status(`Restore unavailable: ${error.message}`); }
 }
 
-const memory = new DemoMemoryLayer();
-const logEl = document.getElementById("log");
-const metersEl = document.getElementById("meters");
-const npcEl = document.getElementById("npc");
-
-memory.addAnchor({ id: "closet", label: "Closet", position: { x: 1, y: 1, z: 0 }, decayRate: 0.016, reinforcementMultiplier: 1.2, tags: ["hide_spot"] });
-memory.addAnchor({ id: "hallway", label: "Hallway", position: { x: 4, y: 2.5, z: 0 }, decayRate: 0.020, reinforcementMultiplier: 1.0, tags: ["route"] });
-memory.addAnchor({ id: "exit", label: "Exit", position: { x: 7, y: 4, z: 0 }, decayRate: 0.018, reinforcementMultiplier: 1.0, tags: ["safe_zone"] });
-
-memory.addRule({ anchorId: "closet", memoryType: "hiding", threshold: 0.45, actionKey: "environment.audio_shift", cooldownSeconds: 7 });
-memory.addRule({ anchorId: "closet", memoryType: "hiding", threshold: 0.72, actionKey: "npc.investigate", cooldownSeconds: 10 });
-memory.addRule({ anchorId: "hallway", memoryType: "danger", threshold: 0.55, actionKey: "npc.raise_alert", cooldownSeconds: 8 });
-memory.addRule({ anchorId: "hallway", memoryType: "route", threshold: 0.50, actionKey: "npc.predict_route", cooldownSeconds: 9 });
-
-function log(message) {
-  logEl.textContent += `${message}\n`;
-  logEl.scrollTop = logEl.scrollHeight;
+function downloadReport() {
+  const report = { scenario: profile, demoHost: { ...host }, ...lab.report() };
+  const data = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(data);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `echopath-public-memory-${profile}-summary.json`;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  status("Exported a retained synthetic event summary—not deterministic simulation replay.");
 }
 
-function zonePosition(anchorId) {
-  const zone = document.getElementById(anchorId);
-  const world = document.getElementById("world");
-  const z = zone.getBoundingClientRect();
-  const w = world.getBoundingClientRect();
-  return {
-    left: `${((z.left + z.width / 2 - w.left) / w.width) * 100}%`,
-    top: `${((z.top + z.height / 2 - w.top) / w.height) * 100}%`,
-  };
-}
-
-memory.onTrigger((trigger) => {
-  log(`[EchoPath Memory] Threshold fired: ${trigger.actionKey} at ${trigger.anchorId} (${trigger.value.toFixed(2)})`);
-
-  if (trigger.actionKey.includes("npc")) {
-    const pos = zonePosition(trigger.anchorId);
-    npcEl.style.left = pos.left;
-    npcEl.style.top = pos.top;
-    npcEl.classList.add("alert");
-    setTimeout(() => npcEl.classList.remove("alert"), 900);
-  }
+node.scenario.addEventListener("change", () => init(node.scenario.value));
+$("runScenario").addEventListener("click", () => {
+  init(node.scenario.value);
+  runRoomSequence(lab, profile);
+  message(`[Script] Replayed fixed synthetic inputs for ${ROOM_PROFILES[profile].title}.`);
+  message(`[Evidence] ${lab.events.length} events, ${lab.triggers.length} triggers, ${lab.actions.length} host-action outcomes.`);
+  status("Script complete. Review threshold and zone readouts; repeat after Reset.");
+  render();
 });
+$("stepTime").addEventListener("click", () => {
+  lab.advance(5);
+  message(`[Time] Advanced 5 simulated seconds to t=${format(lab.time)}.`);
+  render();
+});
+$("resetLab").addEventListener("click", () => init(profile));
+$("saveLab").addEventListener("click", save);
+$("restoreLab").addEventListener("click", restore);
+$("exportLab").addEventListener("click", downloadReport);
 
-function anchorPosition(anchorId) {
-  return memory.anchors.get(anchorId)?.position ?? { x: 0, y: 0, z: 0 };
-}
-
-function write(type, anchorId, strength) {
-  const anchor = memory.writeEngram({
-    anchorId,
-    position: anchorPosition(anchorId),
-    eventType: type,
-    strength,
-    source: "demo_user",
-    tags: ["public_demo"],
-  });
-  if (!anchor) return;
-  const value = memory.getMemory(anchorId, type);
-  log(`[EchoPath Memory] writeEngram(${type}) -> ${anchor.label}: ${value.toFixed(2)}`);
-  renderNpcQuery();
-}
-
-document.querySelectorAll("[data-event]").forEach((button) => {
+document.querySelectorAll("[data-event][data-anchor]").forEach(button => {
+  button.addEventListener("click", () => write(button.dataset.anchor,
+    button.dataset.event, Number(button.dataset.strength)));
+});
+document.querySelectorAll(".world .zone").forEach(button => {
   button.addEventListener("click", () => {
-    write(button.dataset.event, button.dataset.anchor, Number(button.dataset.strength));
+    const channel = ({ closet: "hiding", hallway: "danger", exit: "route", door: "object" })[button.id];
+    if (channel) write(button.id, channel, 0.2);
   });
 });
-
-document.querySelectorAll(".zone").forEach((zone) => {
-  zone.addEventListener("click", () => {
-    const type = zone.id === "closet" ? "hiding" : zone.id === "exit" ? "safe" : "presence";
-    write(type, zone.id, 0.16);
-  });
-});
-
-const meterKeys = [
-  ["closet", "hiding"],
-  ["hallway", "sound"],
-  ["hallway", "danger"],
-  ["hallway", "route"],
-  ["exit", "safe"],
-];
-
-function renderMeters() {
-  metersEl.innerHTML = meterKeys.map(([anchor, type]) => {
-    const value = memory.getMemory(anchor, type);
-    return `
-      <div class="meter">
-        <div class="meter-label"><span>${anchor}.${type}</span><span>${value.toFixed(2)}</span></div>
-        <div class="bar"><div class="fill" style="width:${Math.round(value * 100)}%"></div></div>
-      </div>
-    `;
-  }).join("");
-
-  for (const [anchorId] of memory.anchors) {
-    const peak = Math.max(...Object.values(memory.anchors.get(anchorId).memory), 0);
-    document.getElementById(anchorId)?.style.setProperty("--pulse", Math.min(0.9, peak).toFixed(2));
-  }
-}
-
-function renderNpcQuery() {
-  const query = memory.getLocalMemoryGradient({ position: { x: 4.2, y: 2.5, z: 0 }, radius: 5 });
-  log(`[NPC Query] action=${query.suggestedAction}; curiosity=${query.curiosity.toFixed(2)}; familiarity=${query.familiarity.toFixed(2)}; danger=${query.danger.toFixed(2)}; hotspot=${query.strongestAnchorId ?? "none"}`);
-}
-
-let last = performance.now();
-function frame(now) {
-  const dt = Math.min((now - last) / 1000, 0.05);
-  last = now;
-  memory.step(dt);
-  renderMeters();
-  requestAnimationFrame(frame);
-}
-
-renderMeters();
-renderNpcQuery();
-requestAnimationFrame(frame);
+window.addEventListener("resize", () => positionNpc(host.npcTarget));
+init();
