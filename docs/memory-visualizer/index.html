@@ -11,7 +11,7 @@
     <section class="hero">
       <p class="eyebrow">EchoPath Memory Layer / Debug Surface</p>
       <h1>Memory Visualizer</h1>
-      <p class="lede">Inspect public-safe spatial memory pressure across anchors and channels. Write into the field, accelerate decay, reinforce patterns, and watch memory intensity change over time.</p>
+      <p class="lede">Explore synthetic memory pressure across anchors, channels, and overlapping zones. Run repeatable scenarios, inspect threshold-action outcomes, and export a bounded evidence summary—without exposing the private engine.</p>
       <div class="cta-row">
         <a class="button primary" href="#visualizer">Inspect the field</a>
         <a class="button secondary" href="../room-remembers/">Try Room Remembers</a>
@@ -25,9 +25,28 @@
         <div class="section-kicker">Primary spatial visualization</div>
         <h2 class="section-title">Anchor pressure field</h2>
         <div class="viz-world"><canvas id="viz" width="900" height="520"></canvas></div>
-        <p class="small">Click the canvas to write the selected memory channel into the nearest anchor. Violet represents retained memory/lineage; activity may intensify as the field is reinforced.</p>
+        <p class="small">Click the canvas to write the selected channel into the nearest anchor. Displayed thresholds and decay are illustrative public-lab settings, not private tuning values. Zone outlines can overlap without duplicating memory.</p>
       </div>
       <div class="panel controls-panel">
+        <div class="section-kicker">Reproducible scenarios</div>
+        <h2 class="section-title">Public Memory Lab</h2>
+        <label class="lab-label" for="vizScenario">Select a synthetic scenario</label>
+        <select class="lab-select" id="vizScenario">
+          <option value="danger">Hazard Recall</option>
+          <option value="safe">Familiar Route</option>
+          <option value="social">Room Usage</option>
+        </select>
+        <p class="hint" id="vizScenarioDescription"></p>
+        <div class="lab-controls">
+          <button class="primary" id="runVizScenario">Run fixed sequence</button>
+          <button id="advanceViz">Advance 5s</button>
+          <button id="zonesToggle" aria-pressed="true">Hide zone overlay</button>
+          <button id="bindRoute">Bind route action</button>
+          <button id="saveViz">Save locally</button>
+          <button id="restoreViz">Restore</button>
+          <button id="exportViz">Export summary</button>
+        </div>
+        <p class="lab-feedback" id="vizStatus" role="status" aria-live="polite"></p>
         <div class="section-kicker">Memory filter</div>
         <h2 class="section-title">Channel</h2>
         <div class="channel-row">
@@ -35,14 +54,23 @@
           <button data-channel="sound">Sound</button>
           <button data-channel="danger">Danger</button>
           <button data-channel="safe">Safe</button>
+          <button data-channel="route">Route</button>
+          <button data-channel="presence">Presence</button>
         </div>
         <div class="section-kicker">Field control</div>
         <h2 class="section-title">Actions</h2>
         <div class="button-stack">
-          <button id="pulse">Write pulse</button>
+          <button id="pulse">Write pulse at Hallway</button>
           <button id="decayFast">Fast decay burst</button>
           <button id="reset">Reset field</button>
         </div>
+        <div class="section-kicker">Zone memory</div>
+        <h2 class="section-title">Overlapping totals</h2>
+        <div class="lab-readouts" id="vizZoneTotals"></div>
+        <div class="section-kicker">Action handling</div>
+        <h2 class="section-title">Diagnostics</h2>
+        <div class="lab-readouts" id="vizActionOutcomes"></div>
+        <p class="small" id="vizHostState">Host visual effects: inactive.</p>
         <div class="section-kicker">Evidence</div>
         <h2 class="section-title">Readout</h2>
         <pre id="readout">Visualizer ready.\n</pre>
@@ -52,9 +80,9 @@
     <section class="panel log-panel">
       <div class="section-kicker">Boundary</div>
       <h2 class="section-title">Readable concept, protected runtime</h2>
-      <p class="small">This visualizer demonstrates the public product concept: worlds accumulate spatial memory and expose it through a readable debug layer. Production builds can support larger maps, custom memory channels, tuned presets, and engine-specific overlays.</p>
+      <p class="small">This demonstration uses synthetic data and a simplified public-safe memory model. Its zone, threshold, callback and snapshot tests are behavioral examples, not numerical verification of the private Spatial Engram Engine or Unity plugin. Exported histories are bounded summaries, not full deterministic replay.</p>
     </section>
   </main>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
