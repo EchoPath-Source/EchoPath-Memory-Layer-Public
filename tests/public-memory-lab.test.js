@@ -69,7 +69,9 @@ test("Public Lab V2: Living Door save/reload preserves once semantics and regist
   again.write("door", "object", .1);
   assert.equal(effects.length, prior, "once action must not refire after restore");
   assert.equal(again.actions.length, lab.actions.length);
-  assert.deepEqual(again.report().retention, lab.report().retention);
+  assert.equal(again.report().retention.retainedEvents, lab.report().retention.retainedEvents + 1);
+  assert.equal(again.report().retention.droppedEvents, lab.report().retention.droppedEvents);
+  assert.deepEqual(again.triggers.map(t => t.actionKey), lab.triggers.map(t => t.actionKey));
 });
 
 test("Public Lab V2: failed restore is atomic, preserving old memory and callback registration", () => {
