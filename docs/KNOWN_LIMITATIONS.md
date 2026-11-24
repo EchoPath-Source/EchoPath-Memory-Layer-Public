@@ -6,6 +6,17 @@ This page describes public-safe limitations for EchoPath Memory Layer Phase 1.
 
 Phase 1 is a public product-wrapper layer around browser demos, starter preset summaries, Memory Lite, and a Memory Ledger Export baseline. It is designed to communicate value without exposing private runtime internals.
 
+## Public Memory Lab V2 scope (educational preview)
+
+The two existing browser demos now show public-safe zones, named scenario sequences, host-action diagnostics, explicit memory-state save/restore and retained event-summary exports. Their inputs and values are **synthetic** and intentionally simple.
+
+- They do **not** import or mirror the private Spatial Engram Engine; numerical parity and feature equivalence are not claimed.
+- Host callbacks operate on browser visual state, not a real Unity NPC, scene serialization, autonomous navigation or simulation platform.
+- Saving uses local browser storage only when chosen by the visitor; no server-backed session persistence.
+- Exported event histories have a documented length limit; there is no full causal replay engine.
+- Scenario scripts are reproducible within the public model but not evidence of Unity package performance or scientific validity.
+- Do not present Memory Lab demos as ready-to-ship commercial runtime source, complete Starter preset behavior, or a full-featured SDK.
+
 ## Demo Limitations
 
 - Browser demos use simplified scenes and small memory fields.
