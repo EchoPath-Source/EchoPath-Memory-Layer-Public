@@ -63,6 +63,18 @@ Run actual browser QA (desktop and mobile) as a **separate required acceptance**
 
 **Not tested by Node CI alone:** actual DOM layout, canvas visuals, mobile accessibility, frame rate, GitHub Pages publication or WordPress embedding. Record browser/device observations before merging or promoting to the website.
 
+## Automated CI evidence — 2026-11-24
+
+**Green:** [Public Memory Lab Validation #45295751707](https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/actions/runs/45295751707), tested commit `bc92cf25da12bf1decd783eeffab7c5d3b1b36e4`.
+
+- `npm run validate:presets`: passed for all ten public starter summaries.
+- `npm test`: **17 passed / 0 failed** (six existing Memory Lite tests, eleven new Public Lab V2 tests).
+- `npm run smoke:lab`: passed JavaScript module syntax and required HTML/CSS hook checks; **not** real browser E2E validation.
+- `npm run evidence:lab`: generated six synthetic records. Events / threshold counts: Room (4/2), Door (4/2), Trail (7/2), Hazard (3/1), Familiar Route (3/1), Room Usage (3/0).
+- Evidence artifact: [public-memory-lab-v2-evidence](https://github.com/EchoPath-Source/EchoPath-Memory-Layer-Public/actions/runs/45295751707/artifacts/14876262371).
+- The initial CI run failed due to an incorrect test expectation: a post-restore write correctly increased retained event count without re-firing a once-only action. The test expectation was corrected; the second run passed.
+- This evidence note is a later documentation commit. Latest PR-head CI and browser/Pages QA still require review before merging.
+
 ## Safe messaging and content claims
 
 **Supported by the public demonstrations:**
