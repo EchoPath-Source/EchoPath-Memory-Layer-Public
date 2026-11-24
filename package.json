@@ -7,7 +7,8 @@
   "scripts": {
     "test": "node --test",
     "validate:presets": "node scripts/validate-presets.js",
-    "smoke:lab": "node scripts/validate-public-lab.js"
+    "smoke:lab": "node scripts/validate-public-lab.js",
+    "evidence:lab": "node scripts/generate-lab-evidence.js"
   },
   "engines": {
     "node": ">=18"
