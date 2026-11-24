@@ -55,6 +55,23 @@ The public Phase 1 repo proves this pattern with browser demos, product wrappers
 
 ---
 
+## Public Memory Lab V2 — Reproducible, Content-Ready Scenarios
+
+The existing browser demos now include a **public-safe educational scenario layer**, separate from the private Spatial Engram Engine and its proprietary implementation.
+
+- **Room Remembers:** repeated hiding memory causes a host-rendered atmosphere cue and NPC investigation.
+- **Living Door:** repeated object-interaction memory opens a demo door. This is an **extra demonstration recipe**, not a newly shipped member of the ten-preset Starter Edition.
+- **Predator Trail:** remembered route/danger signals inform a simple host-controlled NPC visualization, not autonomous pathfinding.
+- **Memory Visualizer:** choose Hazard Recall, Familiar Route or Room Usage; inspect overlapping zones, saved snapshots, and the difference between a handled and unbound host action.
+
+These synthetic scenarios use fixed input sequences and explicit simulation-time steps, enabling reproducible content capture and automated tests. Browser-only save/restore and summary export are available via deliberate user controls. Export records describe retained events and action results but **do not reconstruct a full deterministic simulation**.
+
+The shared public implementation lives in `docs/lab/`. Tests in `tests/public-memory-lab.test.js` and static checks via `npm run smoke:lab` validate the educational contract. They **do not validate private kernel numerics or Unity C# compilation**. The private engine keeps its separate canonical tests.
+
+[Public Lab validation and content guide](docs/lab/VALIDATION_AND_CONTENT_PLAYBOOK.md).
+
+---
+
 ## Memory Lite Public Runtime
 
 Memory Lite is the public-safe runtime abstraction for examples and product previews.

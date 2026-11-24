@@ -11,7 +11,7 @@
     <section class="hero">
       <p class="eyebrow">EchoPath Memory Layer / Interactive Memory</p>
       <h1>The Room Remembers</h1>
-      <p class="lede">Write spatial memory into the room, watch it decay or reinforce, and observe the moment remembered behavior crosses a threshold and changes the NPC response.</p>
+      <p class="lede">A hands-on public Memory Lab: choose a scenario, write synthetic spatial memory, watch thresholds and host actions, inspect overlapping zones, and save or export your results. This educational preview is not the private engine.</p>
       <div class="cta-row">
         <a class="button primary" href="#demo">Enter the room</a>
         <a class="button secondary" href="../memory-visualizer/">Open Memory Visualizer</a>
@@ -22,13 +22,14 @@
 
     <section class="panel try-panel">
       <div class="section-kicker">Suggested run</div>
-      <h2 class="section-title">Reinforce a memory until the room responds</h2>
+      <h2 class="section-title">Choose a memory behavior, then reproduce it</h2>
       <ol>
-        <li>Tap <strong>Player hides in Closet</strong> four or five times.</li>
-        <li>Watch <strong>closet.hiding</strong> accumulate while decay continuously pulls it down.</li>
-        <li>When the threshold is crossed, the NPC investigates the remembered location.</li>
+        <li>Select <strong>Room Remembers</strong>, <strong>Living Door</strong>, or <strong>Predator Trail</strong>.</li>
+        <li>Use <strong>Run scripted scenario</strong> for a repeatable comparison, or write individual events.</li>
+        <li>Inspect memory levels, shared zones, trigger rules, and whether each host action was actually handled.</li>
+        <li>Save and restore your synthetic session, or export a bounded evidence summary.</li>
       </ol>
-      <p class="hint">This is a simplified public sandbox. Production/plugin builds support larger maps, custom anchors, tuned presets, engine adapters, and studio integration.</p>
+      <p class="hint">This is a simplified, public-safe model with illustrative thresholds, not the private Spatial Engram Engine, exact replay, or Unity gameplay certification.</p>
     </section>
 
     <section id="demo" class="demo-grid">
@@ -39,12 +40,31 @@
           <button class="zone" id="closet" style="left: 10%; top: 18%;">Closet</button>
           <button class="zone" id="hallway" style="left: 43%; top: 42%;">Hallway</button>
           <button class="zone" id="exit" style="left: 74%; top: 65%;">Exit</button>
+          <button class="zone" id="door" style="left: 83%; top: 20%;">Living Door</button>
           <div class="npc" id="npc">NPC</div>
         </div>
         <p class="hint">Click a zone to write memory. Violet indicates retained memory/lineage; cyan indicates active interaction; gold is reserved for meaningful threshold response.</p>
       </div>
 
       <div class="panel controls-panel">
+        <div class="section-kicker">Scenario control</div>
+        <h2 class="section-title">Memory Lab</h2>
+        <label class="lab-label" for="scenario">Select a demonstration</label>
+        <select class="lab-select" id="scenario">
+          <option value="room">The Room Remembers</option>
+          <option value="door">Living Door</option>
+          <option value="trail">Predator Trail</option>
+        </select>
+        <p class="hint" id="scenarioDescription"></p>
+        <div class="lab-controls">
+          <button class="primary" id="runScenario">Run scripted scenario</button>
+          <button id="stepTime">Advance 5s</button>
+          <button id="resetLab">Reset</button>
+          <button id="saveLab">Save locally</button>
+          <button id="restoreLab">Restore</button>
+          <button id="exportLab">Export summary</button>
+        </div>
+        <p class="lab-feedback" id="labStatus" role="status" aria-live="polite"></p>
         <div class="section-kicker">Memory input</div>
         <h2 class="section-title">Write memory</h2>
         <div class="button-stack">
@@ -52,10 +72,19 @@
           <button data-event="sound" data-anchor="hallway" data-strength="0.20">Sound in Hallway</button>
           <button data-event="safe" data-anchor="exit" data-strength="0.14">Safe route to Exit</button>
           <button data-event="danger" data-anchor="hallway" data-strength="0.24">Danger in Hallway</button>
+          <button data-event="object" data-anchor="door" data-strength="0.22">Interact with Living Door</button>
+          <button data-event="route" data-anchor="exit" data-strength="0.19">Travel toward Exit</button>
         </div>
         <div class="section-kicker">Live state</div>
         <h2 class="section-title">Memory values</h2>
         <div id="meters" class="meters"></div>
+        <div class="section-kicker">Spatial aggregation</div>
+        <h2 class="section-title">Overlapping zones</h2>
+        <div id="zoneTotals" class="lab-readouts"></div>
+        <div class="section-kicker">Host response</div>
+        <h2 class="section-title">Action diagnostics</h2>
+        <div id="actionOutcomes" class="lab-readouts" aria-live="polite"></div>
+        <p class="small" id="worldState">Demo host state: neutral.</p>
       </div>
     </section>
 
@@ -65,6 +94,6 @@
       <pre id="log">[EchoPath Memory] Demo ready.\n</pre>
     </section>
   </main>
-  <script src="game.js"></script>
+  <script type="module" src="game.js"></script>
 </body>
 </html>
