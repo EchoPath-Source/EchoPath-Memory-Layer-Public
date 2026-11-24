@@ -6,7 +6,8 @@
   "description": "Public-safe EchoPath Memory Layer documentation, demos, and Memory Lite reference runtime.",
   "scripts": {
     "test": "node --test",
-    "validate:presets": "node scripts/validate-presets.js"
+    "validate:presets": "node scripts/validate-presets.js",
+    "smoke:lab": "node scripts/validate-public-lab.js"
   },
   "engines": {
     "node": ">=18"
